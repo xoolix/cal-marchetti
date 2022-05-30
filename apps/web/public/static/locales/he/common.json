@@ -605,7 +605,6 @@
   "into_the_future": "בעתיד",
   "within_date_range": "בתוך טווח תאריכים",
   "indefinitely_into_future": "בעתיד, במועד לא ידוע",
-  "this_input_will_shown_booking_this_event": "הקלט יוצג בעת הזמנת אירוע זה",
   "add_new_custom_input_field": "הוספת שדה קלט מותאם אישית חדש",
   "quick_chat": "צ'אט מהיר",
   "add_new_team_event_type": "הוסף סוג אירוע חדש עבור הצוות",
@@ -767,5 +766,6 @@
   "impersonate": "התחזות",
   "impersonate_user_tip": "כל השימושים בתכונה זו נבדקים.",
   "impersonating_user_warning": "בהתחזות לשם המשתמש \"{{user}}\".",
-  "impersonating_stop_instructions": "<0>לחץ כאן כדי להפסיק</0>."
+  "impersonating_stop_instructions": "<0>לחץ כאן כדי להפסיק</0>.",
+  "this_input_will_shown_booking_this_event": "הקלט יוצג בעת הזמנת אירוע זה"
 }

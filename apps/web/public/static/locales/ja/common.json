@@ -605,7 +605,6 @@
   "into_the_future": "将来の日付",
   "within_date_range": "日付の範囲内で",
   "indefinitely_into_future": "未定の将来の日",
-  "this_input_will_shown_booking_this_event": "この入力は、このイベントを予約する際に表示されます",
   "add_new_custom_input_field": "新しいカスタム入力フィールドを追加する",
   "quick_chat": "クイックチャット",
   "add_new_team_event_type": "新しいチームイベントのタイプを追加する",
@@ -763,5 +762,6 @@
   "send_reschedule_request": "スケジュールの変更をリクエスト",
   "edit_booking": "予約を編集",
   "reschedule_booking": "予約のスケジュールを変更",
-  "former_time": "以前の時間"
+  "former_time": "以前の時間",
+  "this_input_will_shown_booking_this_event": "この入力は、このイベントを予約する際に表示されます"
 }
