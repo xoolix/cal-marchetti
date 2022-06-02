@@ -1414,7 +1414,7 @@ const EventTypePage = (props: inferSSRProps<typeof getServerSideProps>) => {
                                       </Tooltip>
                                     </div>
                                     <span className="text-xs text-gray-500">
-                                      The URL will regenerate after each use
+                                      La URL se regenerará después de cada uso.
                                     </span>
                                   </div>
                                 </div>

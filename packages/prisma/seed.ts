@@ -31,7 +31,7 @@ async function createUserAndEventType(opts: {
     password: await hashPassword(opts.user.password),
     emailVerified: new Date(),
     completedOnboarding: opts.user.completedOnboarding ?? true,
-    locale: "en",
+    locale: "es",
     schedules:
       opts.user.completedOnboarding ?? true
         ? {
