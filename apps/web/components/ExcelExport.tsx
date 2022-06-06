@@ -22,15 +22,11 @@ export const ExcelExport = ({ booking }) => {
     for (let i = 0; i < booking.length; i++) {
       excelData[0].data.push([
         booking[i].attendees[0].name,
-
         dayjs(booking[i].startTime).format("DD-MM HH:mm"),
-
         booking[i].eventType.eventName,
       ]);
     }
   };
-
-  console.log(excelData);
 
   return (
     <ExcelFile
