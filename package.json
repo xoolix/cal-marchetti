@@ -51,6 +51,7 @@
     "prettier": "^2.5.1"
   },
   "dependencies": {
+    "react-export-excel-xlsx-fix": "^0.5.3",
     "turbo": "1.2.9"
   },
   "resolutions": {
