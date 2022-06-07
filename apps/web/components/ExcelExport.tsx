@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import dayjs from "dayjs";
 import React from "react";
 import ReactExport from "react-export-excel-xlsx-fix";
