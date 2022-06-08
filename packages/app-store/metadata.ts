@@ -18,6 +18,7 @@ import { metadata as vital } from "./vital/_metadata";
 import { metadata as wipemycalother } from "./wipemycalother/_metadata";
 import { metadata as zapier } from "./zapier/_metadata";
 import { metadata as zoomvideo } from "./zoomvideo/_metadata";
+import { metadata as mercadopago} from "./mercadopago/_metadata";
 
 export const appStoreMetadata = {
   applecalendar,
@@ -40,6 +41,7 @@ export const appStoreMetadata = {
   metamask,
   giphy,
   zapier,
+  mercadopago
 };
 
 export default appStoreMetadata;

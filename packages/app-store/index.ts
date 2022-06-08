@@ -19,9 +19,10 @@ import * as vital from "./vital";
 import * as wipemycalother from "./wipemycalother";
 import * as zapier from "./zapier";
 import * as zoomvideo from "./zoomvideo";
+import * as mercadopago from "./mercadopago";
 
 const appStore = {
-  //   example,
+  mercadopago,
   applecalendar,
   caldavcalendar,
   dailyvideo,
@@ -41,7 +42,7 @@ const appStore = {
   wipemycalother,
   metamask,
   giphy,
-  zapier,
+  zapier
 };
 
 export default appStore;
