@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "private": true,
+  "name": "@calcom/mercadopago",
+  "version": "0.1.0",
+  "main": "./index.tsx",
+  "description": "Payments through the Checkout PRO of MercadoPago.",
+  "dependencies": {
+    "@calcom/prisma": "*",
+    "mercadopago": "^1.5.13"
+  },
+  "devDependencies": {
+    "@calcom/types": "*"
+  }
+}
