@@ -781,6 +781,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     );
   }
 
+  // MercadoPago data a partir de aca
   if (
     !Number.isNaN(eventType.price) &&
     eventType.price > 0 &&
