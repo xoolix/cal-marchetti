@@ -14,7 +14,7 @@ export const metadata = {
   verified: true,
   rating: 5,
   reviews: 69,
-  installed: true,
+  installed: !!(process.env.ACCESS_TOKEN && process.env.PUBLIC_KEY),
   category: "payment",
   slug: "mercadopago",
   title: "MercadoPago",
