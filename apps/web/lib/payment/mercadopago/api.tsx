@@ -1,18 +1,16 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-
 /**
  * This is an example endpoint for an app, these will run under `/api/integrations/[...args]`
  * @param req
  * @param res
  */
 
-export default async function llamadaMP() {
+export default async function mercadoPagoCall() {
   //Data de MP
   const data = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer TEST-7753364614567769-060310-0ffa8c901c4018965e617fd7ba889fb5-380284170",
+      Authorization: `Bearer TEST-7753364614567769-060310-0ffa8c901c4018965e617fd7ba889fb5-380284170`,
     },
     body: JSON.stringify({
       items: [

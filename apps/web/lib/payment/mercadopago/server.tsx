@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from "uuid";
 import prisma from "@calcom/prisma";
 import { CalendarEvent } from "@calcom/types/Calendar";
 
-import llamadaMP from "@lib/payment/mercadopago/api";
+import mercadoPagoCall from "@lib/payment/mercadopago/api";
 
-export async function handlePayment(
+export async function handlePaymentMP(
   evt: CalendarEvent,
   selectedEventType: {
     price: number;
@@ -19,7 +19,8 @@ export async function handlePayment(
     uid: string;
   }
 ) {
-  const payment = await prisma.payment.create({
+  const mercadoPagoResponse = await mercadoPagoCall();
+  const mpPayment = await prisma.payment.create({
     data: {
       type: PaymentType.MERCADOPAGO,
       uid: uuidv4(),
@@ -29,13 +30,15 @@ export async function handlePayment(
         },
       },
       amount: selectedEventType.price,
+      fee: 0,
       currency: selectedEventType.currency,
       success: false,
       refunded: false,
-      data: respuestaMP,
-      externalUri: respuestaMP.init_point,
+      data: mercadoPagoResponse,
+      externalId: "",
+      externalUri: mercadoPagoResponse.init_point,
     },
   });
 
-  return payment;
+  return mpPayment;
 }

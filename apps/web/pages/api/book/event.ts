@@ -30,6 +30,7 @@ import { ensureArray } from "@lib/ensureArray";
 import { getEventName } from "@lib/event";
 import getBusyTimes from "@lib/getBusyTimes";
 import isOutOfBounds from "@lib/isOutOfBounds";
+import { handlePaymentMP } from "@lib/payment/mercadopago/server";
 import prisma from "@lib/prisma";
 import { BookingCreateBody } from "@lib/types/booking";
 import sendPayload from "@lib/webhooks/sendPayload";
@@ -795,6 +796,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       if (!booking.user) booking.user = user;
       const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
+      const mpPayment = await handlePaymentMP(evt, eventType, booking);
 
       res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
       return;
