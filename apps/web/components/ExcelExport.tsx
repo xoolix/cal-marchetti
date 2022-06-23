@@ -22,11 +22,13 @@ export const ExcelExport = ({ booking }) => {
 
   const updateData = () => {
     for (let i = 0; i < booking.length; i++) {
-      excelData[0].data.push([
-        booking[i].attendees[0].name,
-        dayjs(booking[i].startTime).format("DD-MM HH:mm"),
-        booking[i].eventType.eventName,
-      ]);
+      if (booking[i].status == "ACCEPTED") {
+        excelData[0].data.push([
+          booking[i].attendees[0].name,
+          dayjs(booking[i].startTime).format("DD-MM HH:mm"),
+          booking[i].eventType.eventName,
+        ]);
+      }
     }
   };
 
