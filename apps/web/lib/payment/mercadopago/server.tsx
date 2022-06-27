@@ -35,7 +35,7 @@ export async function handlePaymentMP(
       success: false,
       refunded: false,
       data: mercadoPagoResponse,
-      externalId: "",
+      externalId: mercadoPagoResponse.init_point,
       externalUri: mercadoPagoResponse.init_point,
     },
   });

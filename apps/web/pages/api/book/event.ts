@@ -558,7 +558,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
      * OR
      * stripePaymentCredential is found and price is higher than 0 then we create a booking
      */
+    const mpIsActive = true;
     if (!eventType.price || (stripePaymentCredential && eventType.price > 0)) {
+      return prisma.booking.create(createBookingObj);
+    } else if (!eventType.price || (mpIsActive && eventType.price > 0)) {
       return prisma.booking.create(createBookingObj);
     }
     // stripePaymentCredential not found and eventType requires payment we return null
@@ -791,15 +794,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   ) {
     try {
       const [firstStripeCredential] = user.credentials.filter((cred) => cred.type == "stripe_payment");
+      const mercadoPagoCredentials = true;
 
-      if (!firstStripeCredential) return res.status(500).json({ message: "Missing payment credentials" });
-
-      if (!booking.user) booking.user = user;
-      const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
-      const mpPayment = await handlePaymentMP(evt, eventType, booking);
-
-      res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
-      return;
+      if (!firstStripeCredential && mercadoPagoCredentials === true) {
+        if (!booking.user) booking.user = user;
+        const mpPayment = await handlePaymentMP(evt, eventType, booking);
+        res.status(201).json({
+          ...booking,
+          message: "Payment required",
+          paymentUid: mpPayment.uid,
+          externalUri: mpPayment.externalUri,
+        });
+        return;
+      } else if (firstStripeCredential) {
+        const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
+        res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
+        return;
+      } else {
+        return res.status(500).json({ message: "Missing payment credentials" });
+      }
     } catch (e) {
       log.error(`Creating payment failed`, e);
       res.status(500).json({ message: "Payment Failed" });
