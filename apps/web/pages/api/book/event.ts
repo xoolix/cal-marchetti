@@ -796,7 +796,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const [firstStripeCredential] = user.credentials.filter((cred) => cred.type == "stripe_payment");
       const mercadoPagoCredentials = true;
 
-      if (!firstStripeCredential && mercadoPagoCredentials === true) {
+      if (firstStripeCredential) {
+        const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
+        res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
+        return;
+      } else if (!firstStripeCredential && mercadoPagoCredentials === true) {
         if (!booking.user) booking.user = user;
         const mpPayment = await handlePaymentMP(evt, eventType, booking);
         res.status(201).json({
@@ -805,10 +809,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           paymentUid: mpPayment.uid,
           externalUri: mpPayment.externalUri,
         });
-        return;
-      } else if (firstStripeCredential) {
-        const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
-        res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
         return;
       } else {
         return res.status(500).json({ message: "Missing payment credentials" });
