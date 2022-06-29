@@ -1,31 +1,25 @@
-/**
- * This is an example endpoint for an app, these will run under `/api/integrations/[...args]`
- * @param req
- * @param res
- */
-
-export default async function mercadoPagoCall() {
+export default async function mercadoPagoCall(successUrl: any) {
   //Data de MP
   const data = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer TEST-7753364614567769-060310-0ffa8c901c4018965e617fd7ba889fb5-380284170`,
+      Authorization: `Bearer TEST-6458829229883871-042719-fea1ecda1083c71c70b46e8dae3c64e5-12299896`,
     },
     body: JSON.stringify({
       items: [
         {
-          title: "Turno",
+          title: "Turno de prueba Marchetti",
           quantity: 1,
           currency_id: "ARS",
-          unit_price: 1000,
+          unit_price: 800,
         },
       ],
       auto_return: "approved",
       back_urls: {
-        success: "https://xoolix.com/",
-        pending: "https://xoolix.com/",
-        failure: "https://xoolix.com/",
+        success: successUrl,
+        pending: successUrl,
+        failure: successUrl,
       },
     }),
   };

@@ -1,9 +1,12 @@
 import { PaymentType } from "@prisma/client";
+import { Booking } from "@prisma/client";
+import { stringify } from "querystring";
 import { v4 as uuidv4 } from "uuid";
 
 import prisma from "@calcom/prisma";
 import { CalendarEvent } from "@calcom/types/Calendar";
 
+import { sendAwaitingPaymentEmail } from "@lib/emails/email-manager";
 import mercadoPagoCall from "@lib/payment/mercadopago/api";
 
 export async function handlePaymentMP(
@@ -12,14 +15,24 @@ export async function handlePaymentMP(
     price: number;
     currency: string;
   },
-  booking: {
-    user: { email: string | null; name: string | null; timeZone: string } | null;
-    id: number;
-    startTime: { toISOString: () => string };
-    uid: string;
-  }
+  booking: any
 ) {
-  const mercadoPagoResponse = await mercadoPagoCall();
+  const params: { [k: string]: any } = {
+    date: "2022-06-29",
+    type: selectedEventType.price,
+    eventSlug: booking.eventType.slug,
+    user: booking.user.email,
+    email: booking.user.email,
+    name: booking.user.name,
+    eventName: booking.eventType.eventName || "",
+    location: booking.location,
+    bookingId: booking.id,
+  };
+  const query = stringify(params);
+  const successUrl = `http://localhost:3000/success?${query}`;
+
+  //Preference
+  const mercadoPagoResponse = await mercadoPagoCall(successUrl);
   const mpPayment = await prisma.payment.create({
     data: {
       type: PaymentType.MERCADOPAGO,
@@ -32,11 +45,23 @@ export async function handlePaymentMP(
       amount: selectedEventType.price,
       fee: 0,
       currency: selectedEventType.currency,
-      success: false,
+      success: true,
       refunded: false,
       data: mercadoPagoResponse,
       externalId: mercadoPagoResponse.init_point,
       externalUri: mercadoPagoResponse.init_point,
+    },
+  });
+
+  await sendAwaitingPaymentEmail({
+    ...evt,
+    paymentInfo: {
+      link: {
+        paymentUid: mpPayment.uid,
+        name: booking.user?.name,
+        email: booking.user?.email,
+        date: booking.startTime.toISOString(),
+      },
     },
   });
 

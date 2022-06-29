@@ -128,9 +128,11 @@ const BookingPage = ({
   const mutation = useMutation(createBooking, {
     onSuccess: async (responseData) => {
       const { id, attendees, paymentUid, externalUri } = responseData;
+
       if (externalUri) {
         return await router.push(externalUri);
       }
+
       if (paymentUid) {
         return await router.push(
           createPaymentLink({
