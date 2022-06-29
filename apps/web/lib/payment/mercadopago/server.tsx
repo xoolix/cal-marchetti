@@ -1,5 +1,5 @@
 import { PaymentType } from "@prisma/client";
-import { Booking } from "@prisma/client";
+import { EventType } from "@prisma/client";
 import { stringify } from "querystring";
 import { v4 as uuidv4 } from "uuid";
 
@@ -15,18 +15,25 @@ export async function handlePaymentMP(
     price: number;
     currency: string;
   },
-  booking: any
+  booking: {
+    user: { email: string | null; name: string | null; timeZone: string } | null;
+    id: number;
+    startTime: { toISOString: () => string };
+    uid: string;
+    eventType: EventType | null;
+  }
 ) {
   const params: { [k: string]: any } = {
     date: "2022-06-29",
-    type: selectedEventType.price,
-    eventSlug: booking.eventType.slug,
-    user: booking.user.email,
-    email: booking.user.email,
-    name: booking.user.name,
-    eventName: booking.eventType.eventName || "",
-    location: booking.location,
+    type: booking.eventType?.id,
+    eventSlug: booking.eventType?.slug,
+    user: booking?.user?.email,
+    email: booking?.user?.email,
+    name: booking?.user?.name,
+    eventName: booking.eventType?.eventName || "",
+    location: evt.location,
     bookingId: booking.id,
+    recur: evt.recurrence,
   };
   const query = stringify(params);
   const successUrl = `http://localhost:3000/success?${query}`;
