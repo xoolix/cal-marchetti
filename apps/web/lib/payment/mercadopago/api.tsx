@@ -1,4 +1,18 @@
-export default async function mercadoPagoCall(successUrl: any) {
+interface MPProps {
+  successUrl: string;
+  quantity: number;
+  title: string;
+  currency: string;
+  unit_price: number;
+}
+
+export default async function mercadoPagoCall({
+  successUrl,
+  quantity,
+  title,
+  currency = "ARS",
+  unit_price,
+}: MPProps) {
   //Data de MP
   const data = {
     method: "POST",
@@ -9,13 +23,14 @@ export default async function mercadoPagoCall(successUrl: any) {
     body: JSON.stringify({
       items: [
         {
-          title: "Turno de prueba Marchetti",
-          quantity: 1,
-          currency_id: "ARS",
-          unit_price: 800,
+          title,
+          quantity,
+          currency_id: currency,
+          unit_price,
         },
       ],
       auto_return: "approved",
+      //TODO: Cambiar urls pending y failure
       back_urls: {
         success: successUrl,
         pending: successUrl,

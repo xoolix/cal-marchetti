@@ -39,7 +39,13 @@ export async function handlePaymentMP(
   const successUrl = `http://localhost:3000/success?${query}`;
 
   //Preference
-  const mercadoPagoResponse = await mercadoPagoCall(successUrl);
+  const mercadoPagoResponse = await mercadoPagoCall({
+    successUrl,
+    quantity: 1,
+    title: "Turno Marchetti",
+    currency: "ARS",
+    unit_price: selectedEventType.price,
+  });
   const mpPayment = await prisma.payment.create({
     data: {
       type: PaymentType.MERCADOPAGO,
