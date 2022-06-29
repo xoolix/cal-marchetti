@@ -24,7 +24,7 @@ export async function handlePaymentMP(
   }
 ) {
   const params: { [k: string]: any } = {
-    date: "2022-06-29",
+    date: booking.startTime.toISOString(),
     type: booking.eventType?.id,
     eventSlug: booking.eventType?.slug,
     user: booking?.user?.email,
