@@ -30,6 +30,7 @@ import { ensureArray } from "@lib/ensureArray";
 import { getEventName } from "@lib/event";
 import getBusyTimes from "@lib/getBusyTimes";
 import isOutOfBounds from "@lib/isOutOfBounds";
+import { handlePaymentMP } from "@lib/payment/mercadopago/server";
 import prisma from "@lib/prisma";
 import { BookingCreateBody } from "@lib/types/booking";
 import sendPayload from "@lib/webhooks/sendPayload";
@@ -529,6 +530,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
         attendees: true,
         payment: true,
+        eventType: true,
       },
       data: newBookingData,
     };
@@ -557,7 +559,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
      * OR
      * stripePaymentCredential is found and price is higher than 0 then we create a booking
      */
+    const mpIsActive = true;
     if (!eventType.price || (stripePaymentCredential && eventType.price > 0)) {
+      return prisma.booking.create(createBookingObj);
+    } else if (!eventType.price || (mpIsActive && eventType.price > 0)) {
       return prisma.booking.create(createBookingObj);
     }
     // stripePaymentCredential not found and eventType requires payment we return null
@@ -781,6 +786,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     );
   }
 
+  // MercadoPago data a partir de aca
   if (
     !Number.isNaN(eventType.price) &&
     eventType.price > 0 &&
@@ -789,14 +795,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   ) {
     try {
       const [firstStripeCredential] = user.credentials.filter((cred) => cred.type == "stripe_payment");
+      const mercadoPagoCredentials = true;
 
-      if (!firstStripeCredential) return res.status(500).json({ message: "Missing payment credentials" });
-
-      if (!booking.user) booking.user = user;
-      const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
-
-      res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
-      return;
+      if (firstStripeCredential) {
+        const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
+        res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
+        return;
+      } else if (!firstStripeCredential && mercadoPagoCredentials === true) {
+        if (!booking.user) booking.user = user;
+        const mpPayment = await handlePaymentMP(evt, eventType, booking);
+        res.status(201).json({
+          ...booking,
+          message: "Payment required",
+          paymentUid: mpPayment.uid,
+          externalUri: mpPayment.externalUri,
+        });
+        return;
+      } else {
+        return res.status(500).json({ message: "Missing payment credentials" });
+      }
     } catch (e) {
       log.error(`Creating payment failed`, e);
       res.status(500).json({ message: "Payment Failed" });

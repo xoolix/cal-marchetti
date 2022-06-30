@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { CheckIcon } from "@heroicons/react/outline";
 import { ArrowLeftIcon, ClockIcon, XIcon } from "@heroicons/react/solid";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
@@ -730,6 +731,7 @@ const schema = z.object({
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const ssr = await ssrInit(context);
   const parsedQuery = schema.safeParse(context.query);
+  console.log("🚀 ~ file: success.tsx ~ line 733 ~ getServerSideProps ~ parsedQuery", parsedQuery);
   if (!parsedQuery.success) return { notFound: true };
   const {
     type: eventTypeId,
@@ -743,6 +745,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   } = parsedQuery.data;
 
   const eventTypeRaw = !eventTypeId ? getDefaultEvent(eventTypeSlug) : await getEventTypesFromDB(eventTypeId);
+  console.log("🚀 ~ file: success.tsx ~ line 746 ~ getServerSideProps ~ eventTypeRaw", eventTypeRaw);
 
   if (!eventTypeRaw) {
     return {

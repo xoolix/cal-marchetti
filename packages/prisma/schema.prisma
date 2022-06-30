@@ -361,21 +361,23 @@ model ReminderMail {
 
 enum PaymentType {
   STRIPE
+  MERCADOPAGO
 }
 
 model Payment {
-  id         Int         @id @default(autoincrement())
-  uid        String      @unique
-  type       PaymentType
-  bookingId  Int
-  booking    Booking?    @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-  amount     Int
-  fee        Int
-  currency   String
-  success    Boolean
-  refunded   Boolean
-  data       Json
-  externalId String      @unique
+  id          Int         @id @default(autoincrement())
+  uid         String      @unique
+  type        PaymentType
+  bookingId   Int
+  booking     Booking?    @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  amount      Int
+  fee         Int
+  currency    String
+  success     Boolean
+  refunded    Boolean
+  data        Json
+  externalId  String      @unique
+  externalUri String?
 }
 
 enum WebhookTriggerEvents {
