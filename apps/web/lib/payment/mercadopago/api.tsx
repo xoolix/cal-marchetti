@@ -18,7 +18,7 @@ export default async function mercadoPagoCall({
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer TEST-6458829229883871-042719-fea1ecda1083c71c70b46e8dae3c64e5-12299896`,
+      Authorization: `Bearer ${process.env.MP_ACCESS_TOKEN}`,
     },
     body: JSON.stringify({
       items: [
@@ -38,6 +38,8 @@ export default async function mercadoPagoCall({
       },
     }),
   };
+  console.log("🚀 ~ file: api.tsx ~ line 41 ~ data", data);
+
   //API
   const res = await fetch("https://api.mercadopago.com/checkout/preferences", data);
   const mercadoPagoData = res.json();

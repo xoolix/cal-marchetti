@@ -36,15 +36,16 @@ export async function handlePaymentMP(
     recur: evt.recurrence,
   };
   const query = stringify(params);
-  const successUrl = `http://localhost:3000/success?${query}`;
+  //TODO cambiar las urls para cada estado
+  const successUrl = `${process.env.MP_REDIRECT_URL}/success?${query}`;
 
   //Preference
   const mercadoPagoResponse = await mercadoPagoCall({
     successUrl,
     quantity: 1,
-    title: "Turno Marchetti",
-    currency: "ARS",
-    unit_price: selectedEventType.price,
+    title: "Turno con Matías Marchetti",
+    currency: selectedEventType.currency,
+    unit_price: Math.trunc(selectedEventType.price / 100),
   });
   const mpPayment = await prisma.payment.create({
     data: {
