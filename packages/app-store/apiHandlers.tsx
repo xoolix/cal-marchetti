@@ -19,7 +19,7 @@ export const apiHandlers = {
   spacebookingother: import("./spacebooking/api"),
   // @todo Until we use DB slugs everywhere
   zapierother: import("./zapier/api"),
-  mercadopago: import("./mercadopago/api")
+  mercadopagopayment: import("./mercadopagopayment/api"),
 };
 
 export default apiHandlers;

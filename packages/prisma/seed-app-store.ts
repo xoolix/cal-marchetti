@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 
 import prisma from ".";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require("dotenv").config({ path: "../../.env.appStore" });
 
 async function createApp(
@@ -129,6 +130,15 @@ async function main() {
       payment_fee_percentage: 0.005,
       public_key: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY,
       webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
+    });
+  }
+
+  // mercadopago
+  if (process.env.MP_PUBLIC_KEY && process.env.MP_ACCESS_TOKEN && process.env.MP_REDIRECT_URL) {
+    await createApp("mercadopago", "mercadopagopayment", ["payment"], "mercadopago_payment", {
+      public_key: process.env.MP_PUBLIC_KEY,
+      access_token: process.env.MP_ACCESS_TOKEN,
+      redirect_url: process.env.MP_REDIRECT_URL,
     });
   }
 }

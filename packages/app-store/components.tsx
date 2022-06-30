@@ -9,7 +9,7 @@ import Button from "@calcom/ui/Button";
 import { InstallAppButtonProps } from "./types";
 
 export const InstallAppButtonMap = {
-  mercadopago: dynamic(() => import("./mercadopago/components/InstallAppButton")),
+  mercadopago: dynamic(() => import("./mercadopagopayment/components/InstallAppButton")),
   applecalendar: dynamic(() => import("./applecalendar/components/InstallAppButton")),
   caldavcalendar: dynamic(() => import("./caldavcalendar/components/InstallAppButton")),
   googlecalendar: dynamic(() => import("./googlecalendar/components/InstallAppButton")),

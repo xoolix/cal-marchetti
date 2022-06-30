@@ -8,6 +8,7 @@ import * as googlevideo from "./googlevideo";
 import * as hubspotothercalendar from "./hubspotothercalendar";
 import * as huddle01video from "./huddle01video";
 import * as jitsivideo from "./jitsivideo";
+import * as mercadopagopayment from "./mercadopagopayment";
 import * as metamask from "./metamask";
 import * as office365calendar from "./office365calendar";
 import * as office365video from "./office365video";
@@ -19,10 +20,9 @@ import * as vital from "./vital";
 import * as wipemycalother from "./wipemycalother";
 import * as zapier from "./zapier";
 import * as zoomvideo from "./zoomvideo";
-import * as mercadopago from "./mercadopago";
 
 const appStore = {
-  mercadopago,
+  mercadopagopayment,
   applecalendar,
   caldavcalendar,
   dailyvideo,
@@ -42,7 +42,7 @@ const appStore = {
   wipemycalother,
   metamask,
   giphy,
-  zapier
+  zapier,
 };
 
 export default appStore;
