@@ -78,7 +78,7 @@ export default function Bookings() {
                       <tbody className="divide-y divide-gray-200 bg-white" data-testid="bookings">
                         {query.data.pages.map((page, index) => (
                           <Fragment key={index}>
-                            <ExcelExport booking={page.bookings} />
+                            {status == "upcoming" && <ExcelExport booking={page.bookings} />}
                             {page.bookings.map((booking) => (
                               <>
                                 <BookingListItem

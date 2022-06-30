@@ -34,17 +34,15 @@ export const ExcelExport = ({ booking }) => {
 
   return (
     <>
-      {booking[0].status === "ACCEPTED" && (
-        <ExcelFile
-          filename="Turnos"
-          element={
-            <Button onClick={updateData} className="mt-2 ml-2 mb-2" color="secondary">
-              Excel
-            </Button>
-          }>
-          <ExcelSheet dataSet={excelData} name="Turnos" />
-        </ExcelFile>
-      )}
+      <ExcelFile
+        filename="Turnos"
+        element={
+          <Button onClick={updateData} className="mt-2 ml-2 mb-2" color="secondary">
+            Excel
+          </Button>
+        }>
+        <ExcelSheet dataSet={excelData} name="Turnos" />
+      </ExcelFile>
     </>
   );
 };
