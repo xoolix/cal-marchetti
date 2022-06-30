@@ -12,6 +12,7 @@ import { inferQueryInput, inferQueryOutput, trpc } from "@lib/trpc";
 
 import BookingsShell from "@components/BookingsShell";
 import EmptyScreen from "@components/EmptyScreen";
+import { ExcelExport } from "@components/ExcelExport";
 import Shell from "@components/Shell";
 import BookingListItem from "@components/booking/BookingListItem";
 import SkeletonLoader from "@components/booking/SkeletonLoader";
@@ -77,13 +78,16 @@ export default function Bookings() {
                       <tbody className="divide-y divide-gray-200 bg-white" data-testid="bookings">
                         {query.data.pages.map((page, index) => (
                           <Fragment key={index}>
+                            <ExcelExport booking={page.bookings} />
                             {page.bookings.map((booking) => (
-                              <BookingListItem
-                                key={booking.id}
-                                listingStatus={status}
-                                {...defineRecurrentCount(booking, page)}
-                                {...booking}
-                              />
+                              <>
+                                <BookingListItem
+                                  key={booking.id}
+                                  listingStatus={status}
+                                  {...defineRecurrentCount(booking, page)}
+                                  {...booking}
+                                />
+                              </>
                             ))}
                           </Fragment>
                         ))}
