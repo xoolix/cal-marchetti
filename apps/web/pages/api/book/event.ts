@@ -591,6 +591,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       credentials: currentUser.credentials,
       startTime: reqBody.start,
       endTime: reqBody.end,
+      eventTypeId,
       userId: currentUser.id,
       selectedCalendars,
     });
