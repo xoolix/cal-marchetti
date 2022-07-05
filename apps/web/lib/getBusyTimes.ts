@@ -10,19 +10,17 @@ import prisma from "@lib/prisma";
 async function getBusyTimes(params: {
   credentials: Credential[];
   userId: number;
-  eventTypeId?: number;
   startTime: string;
   endTime: string;
   selectedCalendars: SelectedCalendar[];
 }) {
-  const { credentials, userId, eventTypeId, startTime, endTime, selectedCalendars } = params;
+  const { credentials, userId, startTime, endTime, selectedCalendars } = params;
   const busyTimes: EventBusyDate[] = await prisma.booking
     .findMany({
       where: {
         AND: [
           {
             userId,
-            eventTypeId,
             startTime: { gte: new Date(startTime) },
             endTime: { lte: new Date(endTime) },
           },
