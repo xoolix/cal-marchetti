@@ -38,8 +38,6 @@ export default async function mercadoPagoCall({
       },
     }),
   };
-  console.log("🚀 ~ file: api.tsx ~ line 41 ~ data", data);
-
   //API
   const res = await fetch("https://api.mercadopago.com/checkout/preferences", data);
   const mercadoPagoData = res.json();

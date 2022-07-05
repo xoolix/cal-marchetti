@@ -477,6 +477,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const newBookingData: Prisma.BookingCreateInput = {
       uid,
+      paid: true,
       title: evt.title,
       startTime: dayjs(evt.startTime).toDate(),
       endTime: dayjs(evt.endTime).toDate(),
