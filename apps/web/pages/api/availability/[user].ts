@@ -80,7 +80,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     credentials: currentUser.credentials,
     startTime: dateFrom.format(),
     endTime: dateTo.format(),
-    eventTypeId,
     userId: currentUser.id,
     selectedCalendars,
   });
