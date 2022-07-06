@@ -63,7 +63,6 @@ export async function getUserAvailability(query: {
     credentials: currentUser.credentials,
     startTime: dateFrom.format(),
     endTime: dateTo.format(),
-    eventTypeId: query.eventTypeId,
     userId: currentUser.id,
     selectedCalendars,
   });
