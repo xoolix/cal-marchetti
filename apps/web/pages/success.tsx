@@ -27,6 +27,7 @@ import {
 import { getDefaultEvent } from "@calcom/lib/defaultEvents";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { localStorage } from "@calcom/lib/webstorage";
+import { Prisma } from "@calcom/prisma/client";
 import { RecurringEvent } from "@calcom/types/Calendar";
 import Button from "@calcom/ui/Button";
 import { EmailInput } from "@calcom/ui/form/fields";
@@ -745,7 +746,26 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   } = parsedQuery.data;
 
   const eventTypeRaw = !eventTypeId ? getDefaultEvent(eventTypeSlug) : await getEventTypesFromDB(eventTypeId);
-  console.log("🚀 ~ file: success.tsx ~ line 746 ~ getServerSideProps ~ eventTypeRaw", eventTypeRaw);
+
+  if (parsedQuery.success) {
+    const bookingId = parsedQuery.data.bookingId;
+    console.log("--------------------->", bookingId);
+    const updatePayment = await prisma.booking.findFirst({
+      where: {
+        id: bookingId,
+      },
+    });
+    const bookingData: Prisma.BookingUpdateInput = {
+      paid: true,
+      confirmed: true,
+    };
+    await prisma.booking.update({
+      where: {
+        id: updatePayment?.id,
+      },
+      data: bookingData,
+    });
+  }
 
   if (!eventTypeRaw) {
     return {
