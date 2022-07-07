@@ -33,7 +33,8 @@ export default async function mercadoPagoCall({
       //TODO: Cambiar urls pending y failure
       back_urls: {
         success: successUrl,
-        failure: "https://xoolix.com/",
+        pending: successUrl,
+        failure: successUrl,
       },
     }),
   };
