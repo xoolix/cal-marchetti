@@ -37,7 +37,7 @@ export async function handlePaymentMP(
   };
   const query = stringify(params);
   //TODO cambiar las urls para cada estado
-  const successUrl = `${process.env.MP_REDIRECT_URL}${query}`;
+  const successUrl = `${process.env.MP_REDIRECT_URL}/success?${query}`;
 
   //Preference
   const mercadoPagoResponse = await mercadoPagoCall({
