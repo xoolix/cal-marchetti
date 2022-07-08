@@ -757,7 +757,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     });
     const bookingData: Prisma.BookingUpdateInput = {
       paid: true,
-      confirmed: true,
     };
     await prisma.booking.update({
       where: {

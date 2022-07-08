@@ -36,6 +36,9 @@ export default async function mercadoPagoCall({
         pending: successUrl,
         failure: successUrl,
       },
+      payment_methods: {
+        excluded_payment_types: [{ id: "ticket" }, { id: "atm" }, { id: "prepaid_card" }],
+      },
     }),
   };
   //API
