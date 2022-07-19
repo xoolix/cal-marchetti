@@ -1,5 +1,6 @@
 interface MPProps {
   successUrl: string;
+  failureUrl: string;
   quantity: number;
   title: string;
   currency: string;
@@ -8,6 +9,7 @@ interface MPProps {
 
 export default async function mercadoPagoCall({
   successUrl,
+  failureUrl,
   quantity,
   title,
   currency = "ARS",
@@ -33,7 +35,7 @@ export default async function mercadoPagoCall({
       //TODO: Cambiar urls pending y failure
       back_urls: {
         success: successUrl,
-        failure: successUrl,
+        failure: failureUrl,
       },
       payment_methods: {
         excluded_payment_types: [{ id: "ticket" }, { id: "atm" }, { id: "prepaid_card" }],
