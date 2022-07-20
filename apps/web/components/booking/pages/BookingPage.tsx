@@ -74,15 +74,15 @@ type BookingPageProps = BookPageProps | TeamBookingPageProps | HashLinkPageProps
 
 type BookingFormValues = {
   name: string;
+  customInputs?: {
+    [key: string]: string | boolean;
+  };
   email: string;
   notes?: string;
   locationType?: LocationType;
   guests?: string[];
   phone?: string;
   hostPhoneNumber?: string; // Maybe come up with a better way to name this to distingish between two types of phone numbers
-  customInputs?: {
-    [key: string]: string | boolean;
-  };
   rescheduleReason?: string;
 };
 
@@ -235,9 +235,6 @@ const BookingPage = ({
     if (!rescheduleUid) {
       return {
         name: loggedInIsOwner ? "" : session?.user?.name || (router.query.name as string) || "",
-        email: loggedInIsOwner ? "" : session?.user?.email || (router.query.email as string) || "",
-        notes: (router.query.notes as string) || "",
-        guests: ensureArray(router.query.guest) as string[],
         customInputs: eventType.customInputs.reduce(
           (customInputs, input) => ({
             ...customInputs,
@@ -245,6 +242,9 @@ const BookingPage = ({
           }),
           {}
         ),
+        email: loggedInIsOwner ? "" : session?.user?.email || (router.query.email as string) || "",
+        notes: (router.query.notes as string) || "",
+        guests: ensureArray(router.query.guest) as string[],
       };
     }
     if (!booking || !booking.attendees.length) {
@@ -258,10 +258,6 @@ const BookingPage = ({
     const customInputType = booking.customInputs;
     return {
       name: primaryAttendee.name || "",
-      email: primaryAttendee.email || "",
-      guests: guestListEmails,
-      notes: booking.description || "",
-      rescheduleReason: "",
       customInputs: eventType.customInputs.reduce(
         (customInputs, input) => ({
           ...customInputs,
@@ -271,6 +267,10 @@ const BookingPage = ({
         }),
         {}
       ),
+      email: primaryAttendee.email || "",
+      guests: guestListEmails,
+      notes: booking.description || "",
+      rescheduleReason: "",
     };
   };
 
@@ -588,6 +588,74 @@ const BookingPage = ({
                       />
                     </div>
                   </div>
+                  {eventType.customInputs
+                    .sort((a, b) => a.id - b.id)
+                    .map((input) => (
+                      <div className="mb-4" key={input.id}>
+                        {input.type !== EventTypeCustomInputType.BOOL && (
+                          <label
+                            htmlFor={"custom_" + input.id}
+                            className="mb-1 block text-sm font-medium text-gray-700 dark:text-white">
+                            {input.label}
+                          </label>
+                        )}
+                        {input.type === EventTypeCustomInputType.TEXTLONG && (
+                          <textarea
+                            {...bookingForm.register(`customInputs.${input.id}`, {
+                              required: input.required,
+                            })}
+                            id={"custom_" + input.id}
+                            rows={3}
+                            className={inputClassName}
+                            placeholder={input.placeholder}
+                            disabled={disabledExceptForOwner}
+                          />
+                        )}
+                        {input.type === EventTypeCustomInputType.TEXT && (
+                          <input
+                            type="text"
+                            {...bookingForm.register(`customInputs.${input.id}`, {
+                              required: input.required,
+                            })}
+                            id={"custom_" + input.id}
+                            className={inputClassName}
+                            placeholder={input.placeholder}
+                            disabled={disabledExceptForOwner}
+                          />
+                        )}
+                        {input.type === EventTypeCustomInputType.NUMBER && (
+                          <input
+                            type="number"
+                            {...bookingForm.register(`customInputs.${input.id}`, {
+                              required: input.required,
+                            })}
+                            id={"custom_" + input.id}
+                            className={inputClassName}
+                            placeholder="Teléfono"
+                            disabled={disabledExceptForOwner}
+                          />
+                        )}
+                        {input.type === EventTypeCustomInputType.BOOL && (
+                          <div className="flex h-5 items-center">
+                            <input
+                              type="checkbox"
+                              {...bookingForm.register(`customInputs.${input.id}`, {
+                                required: input.required,
+                              })}
+                              id={"custom_" + input.id}
+                              className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black disabled:bg-gray-200 ltr:mr-2 rtl:ml-2 disabled:dark:text-gray-500"
+                              placeholder=""
+                              disabled={disabledExceptForOwner}
+                            />
+                            <label
+                              htmlFor={"custom_" + input.id}
+                              className="mb-1 block text-sm font-medium text-gray-700 dark:text-white">
+                              {input.label}
+                            </label>
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   <div className="mb-4">
                     <label
                       htmlFor="email"
@@ -656,74 +724,6 @@ const BookingPage = ({
                       </div>
                     </div>
                   )}
-                  {eventType.customInputs
-                    .sort((a, b) => a.id - b.id)
-                    .map((input) => (
-                      <div className="mb-4" key={input.id}>
-                        {input.type !== EventTypeCustomInputType.BOOL && (
-                          <label
-                            htmlFor={"custom_" + input.id}
-                            className="mb-1 block text-sm font-medium text-gray-700 dark:text-white">
-                            {input.label}
-                          </label>
-                        )}
-                        {input.type === EventTypeCustomInputType.TEXTLONG && (
-                          <textarea
-                            {...bookingForm.register(`customInputs.${input.id}`, {
-                              required: input.required,
-                            })}
-                            id={"custom_" + input.id}
-                            rows={3}
-                            className={inputClassName}
-                            placeholder={input.placeholder}
-                            disabled={disabledExceptForOwner}
-                          />
-                        )}
-                        {input.type === EventTypeCustomInputType.TEXT && (
-                          <input
-                            type="text"
-                            {...bookingForm.register(`customInputs.${input.id}`, {
-                              required: input.required,
-                            })}
-                            id={"custom_" + input.id}
-                            className={inputClassName}
-                            placeholder={input.placeholder}
-                            disabled={disabledExceptForOwner}
-                          />
-                        )}
-                        {input.type === EventTypeCustomInputType.NUMBER && (
-                          <input
-                            type="number"
-                            {...bookingForm.register(`customInputs.${input.id}`, {
-                              required: input.required,
-                            })}
-                            id={"custom_" + input.id}
-                            className={inputClassName}
-                            placeholder=""
-                            disabled={disabledExceptForOwner}
-                          />
-                        )}
-                        {input.type === EventTypeCustomInputType.BOOL && (
-                          <div className="flex h-5 items-center">
-                            <input
-                              type="checkbox"
-                              {...bookingForm.register(`customInputs.${input.id}`, {
-                                required: input.required,
-                              })}
-                              id={"custom_" + input.id}
-                              className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black disabled:bg-gray-200 ltr:mr-2 rtl:ml-2 disabled:dark:text-gray-500"
-                              placeholder=""
-                              disabled={disabledExceptForOwner}
-                            />
-                            <label
-                              htmlFor={"custom_" + input.id}
-                              className="mb-1 block text-sm font-medium text-gray-700 dark:text-white">
-                              {input.label}
-                            </label>
-                          </div>
-                        )}
-                      </div>
-                    ))}
                   {!eventType.disableGuests && (
                     <div className="mb-4">
                       {!guestToggle && (

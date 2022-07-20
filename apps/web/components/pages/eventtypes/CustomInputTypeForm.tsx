@@ -41,6 +41,7 @@ const CustomInputTypeForm: FC<Props> = (props) => {
     props.onCancel();
   };
 
+  console.log("selectedCustomInput -------->", selectedCustomInput);
   return (
     <form onSubmit={handleSubmit(props.onSubmit)}>
       <div className="mb-2">
