@@ -60,6 +60,9 @@ export default function Bookings() {
     return { recurringCount };
   };
 
+  const excelArray = [];
+  console.log(excelArray);
+
   return (
     <Shell heading={t("bookings")} subtitle={t("bookings_description")} customLoader={<SkeletonLoader />}>
       <WipeMyCalActionButton trpc={trpc} bookingStatus={status} bookingsEmpty={isEmpty} />
@@ -74,25 +77,32 @@ export default function Bookings() {
               {query.status === "success" && !isEmpty && (
                 <>
                   <div className="mt-6 overflow-hidden rounded-sm border border-b border-gray-200">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <tbody className="divide-y divide-gray-200 bg-white" data-testid="bookings">
-                        {query.data.pages.map((page, index) => (
-                          <Fragment key={index}>
-                            {status == "upcoming" && <ExcelExport booking={page.bookings} />}
-                            {page.bookings.map((booking) => (
-                              <>
+                    <>
+                      {query.data.pages.map((page) => {
+                        {
+                          page.bookings.map((booking) => {
+                            excelArray.push(booking);
+                          });
+                        }
+                      })}
+                      <ExcelExport booking={excelArray} />
+                      <table className="min-w-full divide-y divide-gray-200">
+                        <tbody className="divide-y divide-gray-200 bg-white" data-testid="bookings">
+                          {query.data.pages.map((page, index) => (
+                            <Fragment key={index}>
+                              {page.bookings.map((booking) => (
                                 <BookingListItem
                                   key={booking.id}
                                   listingStatus={status}
                                   {...defineRecurrentCount(booking, page)}
                                   {...booking}
                                 />
-                              </>
-                            ))}
-                          </Fragment>
-                        ))}
-                      </tbody>
-                    </table>
+                              ))}
+                            </Fragment>
+                          ))}
+                        </tbody>
+                      </table>
+                    </>
                   </div>
                   <div className="p-4 text-center" ref={buttonInView.ref}>
                     <Button
