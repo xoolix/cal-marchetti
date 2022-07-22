@@ -596,7 +596,7 @@ const BookingPage = ({
                           <label
                             htmlFor={"custom_" + input.id}
                             className="mb-1 block text-sm font-medium text-gray-700 dark:text-white">
-                            {input.label}
+                            {input.label.replaceAll("_", " ")}
                           </label>
                         )}
                         {input.type === EventTypeCustomInputType.TEXTLONG && (

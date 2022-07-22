@@ -25,6 +25,8 @@ export const ExcelExport = ({ booking }) => {
     },
   ];
 
+  console.log(booking);
+
   const updateData = () => {
     for (let i = 0; i < booking.length; i++) {
       if (booking[i].status == "ACCEPTED") {
