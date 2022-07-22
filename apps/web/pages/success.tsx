@@ -399,7 +399,7 @@ export default function Success(props: SuccessProps) {
                                 <>
                                   {customInput !== "" && (
                                     <>
-                                      <div className="mt-2 pr-3 font-medium">{key}</div>
+                                      <div className="mt-2 pr-3 font-medium">{key.replaceAll("_", " ")}</div>
                                       <div className="col-span-2 mt-2 mb-2">
                                         {typeof customInput === "boolean" ? (
                                           <p>{customInput ? "true" : "false"}</p>
