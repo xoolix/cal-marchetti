@@ -334,7 +334,7 @@ const AvailabilityPage = ({ profile, plan, eventType, workingHours, previousPage
                           })),
                       ].filter((item) => !!item.image) as { image: string; alt?: string; title?: string }[]
                     }
-                    size={10}
+                    size={18}
                     truncateAfter={3}
                   />
                   <h2 className="mt-3 break-words font-medium text-gray-500 dark:text-gray-300">

@@ -464,7 +464,7 @@ const BookingPage = ({
               <div className="sm:w-1/2 sm:border-r sm:dark:border-gray-700">
                 <AvatarGroup
                   border="border-2 border-white dark:border-gray-800"
-                  size={14}
+                  size={40}
                   items={[{ image: profile.image || "", alt: profile.name || "" }].concat(
                     eventType.users
                       .filter((user) => user.name !== profile.name)
