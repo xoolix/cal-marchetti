@@ -731,6 +731,7 @@ const schema = z.object({
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const ssr = await ssrInit(context);
+  const queryStatus = context.query.status;
   const parsedQuery = schema.safeParse(context.query);
   console.log("🚀 ~ file: success.tsx ~ line 733 ~ getServerSideProps ~ parsedQuery", parsedQuery);
   if (!parsedQuery.success) return { notFound: true };
@@ -747,9 +748,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const eventTypeRaw = !eventTypeId ? getDefaultEvent(eventTypeSlug) : await getEventTypesFromDB(eventTypeId);
 
-  if (parsedQuery.success) {
+  if (parsedQuery.success && queryStatus === "approved") {
     const bookingId = parsedQuery.data.bookingId;
-    console.log("--------------------->", bookingId);
     const updatePayment = await prisma.booking.findFirst({
       where: {
         id: bookingId,
@@ -757,6 +757,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     });
     const bookingData: Prisma.BookingUpdateInput = {
       paid: true,
+      confirmed: true,
     };
     await prisma.booking.update({
       where: {
