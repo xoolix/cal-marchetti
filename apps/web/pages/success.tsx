@@ -856,7 +856,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     },
   });
-  let recurringBookings = null;
+  let recurringBookings: { startTime: Date }[] | null = null;
   if (recurringEventIdQuery) {
     // We need to get the dates for the bookings to be able to show them in the UI
     recurringBookings = await prisma.booking.findMany({
