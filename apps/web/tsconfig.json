@@ -1,7 +1,13 @@
 {
   "extends": "@calcom/tsconfig/nextjs.json",
   "compilerOptions": {
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
     "baseUrl": ".",
     "paths": {
       "@components/*": ["components/*"],
