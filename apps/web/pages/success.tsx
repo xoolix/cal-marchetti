@@ -733,7 +733,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const ssr = await ssrInit(context);
   const queryStatus = context.query.status;
   const parsedQuery = schema.safeParse(context.query);
-  console.log("🚀 ~ file: success.tsx ~ line 733 ~ getServerSideProps ~ parsedQuery", parsedQuery);
+
   if (!parsedQuery.success) return { notFound: true };
   const {
     type: eventTypeId,

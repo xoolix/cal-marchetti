@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import React from "react";
 
+import { Prisma } from "@calcom/prisma/client";
 import { Button } from "@calcom/ui";
 
 import prisma from "@lib/prisma";
@@ -10,8 +11,9 @@ import { inferSSRProps } from "@lib/types/inferSSRProps";
 import { HeadSeo } from "@components/seo/head-seo";
 
 function PlaceholderFailure(props: inferSSRProps<typeof getServerSideProps>) {
-  const data = props?.payment?.data;
-  const link = data?.init_point;
+  const data = props?.payment?.data as Prisma.JsonObject;
+  const link = data.init_point as string;
+
   return (
     <>
       <HeadSeo title="Error en el pago" description="" nextSeoProps={{}} />
@@ -43,7 +45,7 @@ function PlaceholderFailure(props: inferSSRProps<typeof getServerSideProps>) {
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const queryId = context.query.bookingId;
-  const id = parseInt(queryId);
+  const id = Number(queryId);
 
   const payment = await prisma.payment.findFirst({
     where: {
