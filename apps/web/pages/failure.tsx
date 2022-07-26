@@ -1,10 +1,20 @@
+import { GetServerSidePropsContext } from "next";
+import Link from "next/link";
 import React from "react";
 
 import { Button } from "@calcom/ui";
 
-export function PlaceholderFailure() {
+import prisma from "@lib/prisma";
+import { inferSSRProps } from "@lib/types/inferSSRProps";
+
+import { HeadSeo } from "@components/seo/head-seo";
+
+function PlaceholderFailure(props: inferSSRProps<typeof getServerSideProps>) {
+  const data = props?.payment?.data;
+  const link = data?.init_point;
   return (
     <>
+      <HeadSeo title="Error en el pago" description="" nextSeoProps={{}} />
       <div className="min-h-screen bg-white px-4" data-testid="404-page">
         <main className="mx-auto max-w-xl pt-16 pb-6 sm:pt-24">
           <div className="text-center">
@@ -20,9 +30,9 @@ export function PlaceholderFailure() {
             <span className="mt-2 inline-block text-lg">
               Puede volver a realizar el pago desde este botón
               <br />
-              <Button className="mt-3">
-                <a href="#">Pagar</a>
-              </Button>
+              <Link href={link}>
+                <Button className="mt-3">Pagar</Button>
+              </Link>
             </span>
           </div>
         </main>
@@ -31,4 +41,21 @@ export function PlaceholderFailure() {
   );
 }
 
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const queryId = context.query.bookingId;
+  const id = parseInt(queryId);
+
+  const payment = await prisma.payment.findFirst({
+    where: {
+      bookingId: id,
+    },
+    select: {
+      data: true,
+    },
+  });
+
+  return {
+    props: { payment },
+  };
+};
 export default PlaceholderFailure;
