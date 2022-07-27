@@ -219,9 +219,7 @@ ${getRichDescription(this.calEvent)}
     if (this.attendee === this.calEvent.attendees[0]) {
       const manageText = this.calEvent.attendees[0].language.translate("manage_this_event");
       return `
-      <p>Cualquier duda o consulta contactarnos al 1125295667</p>
-      <br/>
-      <p></p>
+      <p style="font-weight: 700; line-height: 24px;">Cualquier duda o consulta contactarnos al 1125295667</p>
       <br/>
       <p>${this.calEvent.attendees[0].language.translate("need_to_reschedule_or_cancel")}</p>
       <p style="font-weight: 400; line-height: 24px;"><a href="${getCancelLink(
