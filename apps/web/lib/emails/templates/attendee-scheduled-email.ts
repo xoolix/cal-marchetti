@@ -205,7 +205,6 @@ ${getRichDescription(this.calEvent)}
             </tbody>
           </table>
         </div>
-        ${emailBodyLogo()}
         <!--[if mso | IE]></td></tr></table><![endif]-->
       </div>
     </body>
@@ -233,7 +232,7 @@ ${getRichDescription(this.calEvent)}
   protected getWhat(): string {
     return `
     <div style="line-height: 6px;">
-      <p style="color: #494949;">${this.calEvent.attendees[0].language.translate("what")}</p>
+      <p style="color: #494949;">${this.calEvent.attendees[0].language.translate("tipo-de-consulta")}</p>
       <p style="color: #494949; font-weight: 400; line-height: 24px;">${this.calEvent.type}</p>
     </div>`;
   }
