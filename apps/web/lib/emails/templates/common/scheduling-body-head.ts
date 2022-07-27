@@ -1,6 +1,6 @@
 import { IS_PRODUCTION, BASE_URL } from "@lib/config/constants";
 
-export type BodyHeadType = "checkCircle" | "xCircle" | "calendarCircle";
+export type BodyHeadType = "checkCircle" | "xCircle" | "calendarCircle" | "cal-logo";
 
 export const getHeadImage = (headerType: BodyHeadType): string => {
   switch (headerType) {
@@ -16,6 +16,10 @@ export const getHeadImage = (headerType: BodyHeadType): string => {
       return IS_PRODUCTION
         ? BASE_URL + "/emails/calendarCircle@2x.png"
         : "https://app.cal.com/emails/calendarCircle@2x.png";
+    case "cal-logo":
+      return IS_PRODUCTION
+        ? "https://turnos-marchetti.vercel.app/LogoMR.png"
+        : "https://turnos-marchetti.vercel.app/LogoMR.png";
   }
 };
 
@@ -51,7 +55,7 @@ export const emailSchedulingBodyHeader = (headerType: BodyHeadType): string => {
                         <tbody>
                           <tr>
                             <td style="width:64px;">
-                              <img height="64" src="${image}" style="border:0;display:block;outline:none;text-decoration:none;height:64px;width:100%;font-size:13px;" width="64" />
+                              <img height="64" src="${image}" style="border:0;display:block;outline:none;text-decoration:none;height:64px;font-size:13px;"/>
                             </td>
                           </tr>
                         </tbody>
