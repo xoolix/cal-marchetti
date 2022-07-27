@@ -82,10 +82,10 @@ ${this.calEvent.cancellationReason && this.getCancellationReason()}
     ${emailHead(headerContent)}
     <body style="word-spacing:normal;background-color:#F5F5F5;">
       <div style="background-color:#F5F5F5;">
-        ${emailSchedulingBodyHeader("xCircle")}
+        ${emailSchedulingBodyHeader("cal-logo")}
         ${emailScheduledBodyHeaderContent(
           this.calEvent.organizer.language.translate("event_request_cancelled"),
-          this.calEvent.organizer.language.translate("emailed_you_and_any_other_attendees")
+          this.calEvent.organizer.language.translate("")
         )}
         ${emailSchedulingBodyDivider()}
         <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
@@ -104,11 +104,10 @@ ${this.calEvent.cancellationReason && this.getCancellationReason()}
                               ${this.getWhat()}
                               ${this.getWhen()}
                               ${this.getWho()}
-                              ${this.getLocation()}
-                              ${this.getDescription()}
-                              ${this.getAdditionalNotes()}
-                              ${this.getCustomInputs()}
                               ${this.calEvent.cancellationReason && this.getCancellationReason()}
+                            </div>
+                            <div style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:500;line-height:0px;text-align:left;color:#3E3E3E;">
+                            <p style="font-weight: 700; line-height: 24px;">Cualquier duda o consulta contactarnos al 1125295667</p>
                             </div>
                           </td>
                         </tr>
@@ -133,7 +132,6 @@ ${this.calEvent.cancellationReason && this.getCancellationReason()}
             </tbody>
           </table>
         </div>
-        ${emailBodyLogo()}
         <!--[if mso | IE]></td></tr></table><![endif]-->
       </div>
     </body>
