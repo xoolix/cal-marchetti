@@ -22,7 +22,7 @@
   "rejection_reason_description": "¿Estás seguro de que deseas rechazar la reserva? Le haremos saber a la persona que ha intentado reservar. Puedes indicar una razón a continuación.",
   "rejection_confirmation": "Rechazar la reserva",
   "manage_this_event": "Administrar este evento",
-  "your_event_has_been_scheduled": "¡El evento ha sido agendado!",
+  "your_event_has_been_scheduled": "¡Tu turno ha sido confirmado!",
   "accept_our_license": "Acepte nuestra licencia cambiando la variable .env <1>NEXT_PUBLIC_LICENSE_CONSENT</1> a '{{agree}}'.",
   "remove_banner_instructions": "Para eliminar este banner, abra su archivo .env y cambie la variable <1>NEXT_PUBLIC_LICENSE_CONSENT</1> a '{{agree}}'.",
   "error_message": "El mensaje de error fue: '{{errorMessage}}'",

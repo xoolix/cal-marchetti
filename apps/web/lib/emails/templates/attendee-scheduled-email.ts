@@ -140,14 +140,14 @@ ${getRichDescription(this.calEvent)}
     ${emailHead(headerContent)}
     <body style="word-spacing:normal;background-color:#F5F5F5;">
       <div style="background-color:#F5F5F5;">
-        ${emailSchedulingBodyHeader("checkCircle")}
+        ${emailSchedulingBodyHeader("cal-logo")}
         ${emailScheduledBodyHeaderContent(
           this.calEvent.attendees[0].language.translate(
             this.recurringEvent?.count
               ? "your_event_has_been_scheduled_recurring"
               : "your_event_has_been_scheduled"
           ),
-          this.calEvent.attendees[0].language.translate("emailed_you_and_any_other_attendees")
+          this.calEvent.attendees[0].language.translate("")
         )}
         ${emailSchedulingBodyDivider()}
         <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
@@ -166,10 +166,6 @@ ${getRichDescription(this.calEvent)}
                               ${this.getWhat()}
                               ${this.getWhen()}
                               ${this.getWho()}
-                              ${this.getLocation()}
-                              ${this.getDescription()}
-                              ${this.getAdditionalNotes()}
-                              ${this.getCustomInputs()}
                             </div>
                           </td>
                         </tr>
