@@ -84,7 +84,7 @@ ${this.calEvent.cancellationReason && this.getCancellationReason()}
       <div style="background-color:#F5F5F5;">
         ${emailSchedulingBodyHeader("cal-logo")}
         ${emailScheduledBodyHeaderContent(
-          this.calEvent.organizer.language.translate("event_request_cancelled"),
+          this.calEvent.organizer.language.translate("event_request_cancelled_organizator"),
           this.calEvent.organizer.language.translate("")
         )}
         ${emailSchedulingBodyDivider()}
