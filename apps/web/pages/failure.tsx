@@ -30,10 +30,15 @@ function PlaceholderFailure(props: inferSSRProps<typeof getServerSideProps>) {
               Hubo un problema en el pago
             </h1>
             <span className="mt-2 inline-block text-lg">
-              Puede volver a realizar el pago desde este botón
+              Puede volver a realizar el pago o reintentar sacar el turno
               <br />
               <Link href={link}>
                 <Button className="mt-3">Pagar</Button>
+              </Link>
+              <Link href={props.returnUrl}>
+                <Button color="secondary" className="mt-5 ml-5">
+                  Reintentar
+                </Button>
               </Link>
             </span>
           </div>
@@ -47,6 +52,9 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   const queryId = context.query.bookingId;
   const id = Number(queryId);
 
+  const eventSlug = context.query.eventSlug;
+  const returnUrl = `${process.env.MP_REDIRECT_URL}/marchettirules/${eventSlug}`;
+
   const payment = await prisma.payment.findFirst({
     where: {
       bookingId: id,
@@ -57,7 +65,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   return {
-    props: { payment },
+    props: { payment, returnUrl },
   };
 };
 export default PlaceholderFailure;
