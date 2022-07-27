@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { CalendarIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
@@ -53,7 +54,7 @@ export default function Bookings() {
   // Get the recurrentCount value from the grouped recurring bookings
   // created with the same recurringEventId
   const defineRecurrentCount = (booking: BookingOutput, page: BookingPage) => {
-    let recurringCount = undefined;
+    let recurringCount: number | undefined = undefined;
     if (booking.recurringEventId !== null) {
       recurringCount = page.groupedRecurringBookings.filter(
         (group) => group.recurringEventId === booking.recurringEventId

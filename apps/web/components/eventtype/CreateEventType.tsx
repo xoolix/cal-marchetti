@@ -84,7 +84,7 @@ export default function CreateEventTypeButton(props: Props) {
   }, [router.isReady, router.query, setValue]);
 
   useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
+    const subscription = watch((value: any, { name, type }) => {
       if (name === "title" && type === "change") {
         if (value.title) setValue("slug", slugify(value.title));
         else setValue("slug", "");
