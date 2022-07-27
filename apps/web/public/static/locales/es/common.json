@@ -52,7 +52,7 @@
   "no_more_results": "No hay más resultados",
   "load_more_results": "Cargar más resultados",
   "integration_meeting_id": "ID de la reunión {{integrationName}}: {{meetingId}}",
-  "confirmed_event_type_subject": "{{eventType}} con {{name}} en {{date}}",
+  "confirmed_event_type_subject": "{{name}} - Confirmación de turno",
   "new_event_request": "Nueva solicitud de evento: {{attendeeName}} - {{date}} - {{eventType}}",
   "confirm_or_reject_request": "Confirmar o rechazar la solicitud",
   "check_bookings_page_to_confirm_or_reject": "Consulta la página de reservas para confirmar o rechazar la reserva.",
