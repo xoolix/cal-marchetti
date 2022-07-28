@@ -105,10 +105,6 @@ ${this.calEvent.cancellationReason && this.getCancellationReason()}
                               ${this.getWhen()}
                               ${this.getWho()}
                               ${this.calEvent.cancellationReason && this.getCancellationReason()}
-                            </div>
-                            <div style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:500;line-height:0px;text-align:left;color:#3E3E3E;">
-                            <p style="font-weight: 700; line-height: 24px;">Cualquier duda o consulta contactarnos al 1125295667</p>
-                            </div>
                           </td>
                         </tr>
                       </tbody>
