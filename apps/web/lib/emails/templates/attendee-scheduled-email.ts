@@ -178,7 +178,6 @@ ${getRichDescription(this.calEvent)}
             </tbody>
           </table>
         </div>
-        ${emailSchedulingBodyDivider()}
         <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
         <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
           <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
@@ -218,10 +217,11 @@ ${getRichDescription(this.calEvent)}
     if (this.attendee === this.calEvent.attendees[0]) {
       const manageText = this.calEvent.attendees[0].language.translate("manage_this_event");
       return `
-      <p style="font-weight: 700; line-height: 24px;">Cualquier duda o consulta contactarnos al 1125295667</p>
+      <p style="font-weight: 700; line-height: 24px;">Cualquier duda o consulta contactarnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
       <br/>
       <p>${this.calEvent.attendees[0].language.translate("need_to_reschedule_or_cancel")}</p>
-      <p style="font-weight: 400; line-height: 24px;"><a href="${getCancelLink(
+      <p style="font-weight: 400; color: red; line-height: 24px;">Si necesitás cancelar o cambiar tu turno por algún imprevisto (¡que suceden y los comprendemos!), te pedimos que lo hagas 24 horas antes de la consulta, para poder otorgar ese lugar a otra persona y que todos tengan la oportunidad de comenzar su cambio. En caso contrario, se cobrará una penalidad. ¡Gracias por tu comprensión!</p>
+      <p style="font-weight: 400; line-height: 24px; text-decoration: underline;"><a href="${getCancelLink(
         this.calEvent
       )}" style="color: #3E3E3E;" alt="${manageText}">${manageText}</a></p>`;
     }
