@@ -69,15 +69,10 @@ export async function handlePaymentMP(
     },
   });
 
-  await sendScheduledEmails({
+  await sendAwaitingPaymentEmail({
     ...evt,
     paymentInfo: {
-      link: {
-        paymentUid: mpPayment.uid,
-        name: booking.user?.name,
-        email: booking.user?.email,
-        date: booking.startTime.toISOString(),
-      },
+      link: mpPayment.externalUri,
     },
   });
 

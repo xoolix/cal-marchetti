@@ -73,10 +73,10 @@ ${this.getCustomInputs()}
     ${emailHead(headerContent)}
     <body style="word-spacing:normal;background-color:#F5F5F5;">
       <div style="background-color:#F5F5F5;">
-        ${emailSchedulingBodyHeader("calendarCircle")}
+        ${emailSchedulingBodyHeader("cal-logo")}
         ${emailScheduledBodyHeaderContent(
           this.attendee.language.translate("meeting_awaiting_payment"),
-          this.attendee.language.translate("emailed_you_and_any_other_attendees")
+          this.attendee.language.translate("")
         )}
         ${emailSchedulingBodyDivider()}
         <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
@@ -95,10 +95,6 @@ ${this.getCustomInputs()}
                               ${this.getWhat()}
                               ${this.getWhen()}
                               ${this.getWho()}
-                              ${this.getLocation()}
-                              ${this.getDescription()}
-                              ${this.getAdditionalNotes()}
-                              ${this.getCustomInputs()}
                             </div>
                           </td>
                         </tr>
@@ -137,13 +133,15 @@ ${this.getCustomInputs()}
                       </tbody>
                     </table>
                   </div>
+                  <div style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:500;line-height:0px;text-align:left;color:#3E3E3E;">
+                    <p style="font-weight: 700; line-height: 24px;">Cualquier duda o consulta contactarnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
+                  </div>
                   <!--[if mso | IE]></td></tr></table><![endif]-->
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        ${emailBodyLogo()}
         <!--[if mso | IE]></td></tr></table><![endif]-->
       </div>
     </body>
