@@ -104,23 +104,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       destinationCalendar: true,
     },
   });
-  // const evt: CalendarEvent = bookingMinimalSelect;
-  // const paymentData = payment?.data as Prisma.JsonObject;
-  // const paymentLink = paymentData.init_point as string;
-  // const customInputs = user?.customInputs as Prisma.JsonObject;
-  // const name = `${customInputs.Apellido} ${user?.attendees[0].name}`;
-
-  // await sendAwaitingPaymentEmail({
-  //   ...evt,
-  //   paymentInfo: {
-  //     link: {
-  //       url: paymentLink,
-  //       name: name,
-  //       email: user?.attendees[0].email,
-  //       date: user?.startTime.toISOString(),
-  //     },
-  //   },
-  // });
 
   return {
     props: { payment, returnUrl },

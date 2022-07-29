@@ -816,7 +816,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         },
       };
     });
-    /* const attendeesList = await Promise.all(attendeesListPromises) as Person[]; */
+
+    const attendeesList = (await Promise.all(attendeesListPromises)) as Person[];
 
     const evt: CalendarEvent = {
       type: type,
@@ -831,7 +832,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         timeZone: timeZone,
         language: { translate: t, locale: booking?.user?.locale ?? "es" },
       },
-      attendees: [],
+      attendees: attendeesList,
       uid: booking?.uid,
       destinationCalendar: booking?.destinationCalendar || booking?.destinationCalendar,
     };
