@@ -805,7 +805,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const timeZone = String(booking?.user?.timeZone);
     const t = await getTranslation(booking?.user?.locale ?? "es", "common");
 
-    const attendeesListPromises = booking?.attendees.map(async (attendee) => {
+    const attendeesListPromises: any = booking?.attendees.map(async (attendee) => {
       return {
         name: attendee.name,
         email: attendee.email,
