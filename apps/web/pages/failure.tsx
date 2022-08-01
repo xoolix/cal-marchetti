@@ -2,9 +2,12 @@ import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import React from "react";
 
+import { bookingMinimalSelect } from "@calcom/prisma";
 import { Prisma } from "@calcom/prisma/client";
+import { CalendarEvent } from "@calcom/types/Calendar";
 import { Button } from "@calcom/ui";
 
+import { sendAwaitingPaymentEmail } from "@lib/emails/email-manager";
 import prisma from "@lib/prisma";
 import { inferSSRProps } from "@lib/types/inferSSRProps";
 
@@ -61,6 +64,44 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     },
     select: {
       data: true,
+    },
+  });
+
+  const user = await prisma.booking.findFirst({
+    where: {
+      id: id,
+    },
+    select: {
+      ...bookingMinimalSelect,
+      userId: true,
+      user: {
+        select: {
+          id: true,
+          credentials: true,
+          email: true,
+          timeZone: true,
+          name: true,
+          destinationCalendar: true,
+        },
+      },
+      location: true,
+      references: {
+        select: {
+          uid: true,
+          type: true,
+          externalCalendarId: true,
+        },
+      },
+      payment: true,
+      paid: true,
+      eventType: {
+        select: {
+          title: true,
+        },
+      },
+      uid: true,
+      eventTypeId: true,
+      destinationCalendar: true,
     },
   });
 

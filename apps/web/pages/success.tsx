@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { CheckIcon } from "@heroicons/react/outline";
 import { ArrowLeftIcon, ClockIcon, XIcon } from "@heroicons/react/solid";
+import { Attendee } from "@prisma/client";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import classNames from "classnames";
 import dayjs from "dayjs";
@@ -24,15 +25,19 @@ import {
   useIsBackgroundTransparent,
   useIsEmbed,
 } from "@calcom/embed-core/embed-iframe";
+import { isPrismaObjOrUndefined } from "@calcom/lib";
 import { getDefaultEvent } from "@calcom/lib/defaultEvents";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { localStorage } from "@calcom/lib/webstorage";
+import { bookingMinimalSelect } from "@calcom/prisma";
 import { Prisma } from "@calcom/prisma/client";
-import { RecurringEvent } from "@calcom/types/Calendar";
+import { RecurringEvent, CalendarEvent } from "@calcom/types/Calendar";
+import { Person } from "@calcom/types/Calendar";
 import Button from "@calcom/ui/Button";
 import { EmailInput } from "@calcom/ui/form/fields";
 
 import { asStringOrThrow } from "@lib/asStringOrNull";
+import { sendScheduledEmails } from "@lib/emails/email-manager";
 import { getEventName } from "@lib/event";
 import useTheme from "@lib/hooks/useTheme";
 import { isBrandingHidden } from "@lib/isBrandingHidden";
@@ -46,6 +51,7 @@ import CustomBranding from "@components/CustomBranding";
 import CancelBooking from "@components/booking/CancelBooking";
 import { HeadSeo } from "@components/seo/head-seo";
 
+import { getTranslation } from "@server/lib/i18n";
 import { ssrInit } from "@server/lib/ssr";
 
 dayjs.extend(utc);
@@ -749,6 +755,97 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const eventTypeRaw = !eventTypeId ? getDefaultEvent(eventTypeSlug) : await getEventTypesFromDB(eventTypeId);
 
   if (parsedQuery.success && queryStatus === "approved") {
+    const queryId = context.query.bookingId;
+    const id = Number(queryId);
+
+    const booking = await prisma.booking.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        ...bookingMinimalSelect,
+        userId: true,
+        user: {
+          select: {
+            id: true,
+            credentials: true,
+            email: true,
+            timeZone: true,
+            name: true,
+            destinationCalendar: true,
+            locale: true,
+          },
+        },
+        location: true,
+        references: {
+          select: {
+            uid: true,
+            type: true,
+            externalCalendarId: true,
+          },
+        },
+        payment: true,
+        paid: true,
+        eventType: {
+          select: {
+            title: true,
+          },
+        },
+        uid: true,
+        eventTypeId: true,
+        destinationCalendar: true,
+      },
+    });
+
+    if (!booking) {
+      return { notFound: true };
+    }
+
+    const type = String(booking.title);
+    const startTime = String(booking.startTime.toISOString());
+    const endTime = String(booking.endTime.toISOString());
+    const email = String(booking.user?.email);
+    const name = String(booking.user?.name);
+    const timeZone = String(booking.user?.timeZone);
+    const t = await getTranslation(booking.user?.locale ?? "es", "common");
+
+    const attendeesListPromise = booking.attendees.map(async (attendee) => {
+      return {
+        name: attendee?.name,
+        email: attendee?.email,
+        timeZone: attendee?.timeZone,
+        language: {
+          translate: await getTranslation(attendee?.locale ?? "es", "common"),
+          locale: attendee?.locale ?? "es",
+        },
+      };
+    });
+
+    const attendeesList = (await Promise.all(attendeesListPromise)) as Person[];
+
+    const evt: CalendarEvent = {
+      type: type,
+      title: type,
+      description: booking?.description || undefined,
+      startTime: startTime,
+      endTime: endTime,
+      customInputs: isPrismaObjOrUndefined(booking?.customInputs),
+      organizer: {
+        email: email,
+        name: name,
+        timeZone: timeZone,
+        language: { translate: t, locale: booking?.user?.locale ?? "es" },
+      },
+      attendees: attendeesList,
+      uid: booking?.uid,
+      destinationCalendar: booking?.destinationCalendar || booking?.destinationCalendar,
+    };
+
+    const eventType = {
+      recurringEvent: (eventTypeRaw?.recurringEvent || {}) as RecurringEvent,
+    };
+    await sendScheduledEmails({ ...evt }, eventType.recurringEvent);
+
     const bookingId = parsedQuery.data.bookingId;
     const updatePayment = await prisma.booking.findFirst({
       where: {
