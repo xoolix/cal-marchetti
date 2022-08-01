@@ -797,16 +797,19 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     });
 
-    const type = String(booking?.title);
-    const startTime = String(booking?.startTime.toISOString());
-    const endTime = String(booking?.endTime.toISOString());
-    const email = String(booking?.user?.email);
-    const name = String(booking?.user?.name);
-    const timeZone = String(booking?.user?.timeZone);
-    const t = await getTranslation(booking?.user?.locale ?? "es", "common");
+    if (!booking) {
+      return { notFound: true };
+    }
 
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-    const attendeesListPromise: any = booking?.attendees?.map(async (attendee) => {
+    const type = String(booking.title);
+    const startTime = String(booking.startTime.toISOString());
+    const endTime = String(booking.endTime.toISOString());
+    const email = String(booking.user?.email);
+    const name = String(booking.user?.name);
+    const timeZone = String(booking.user?.timeZone);
+    const t = await getTranslation(booking.user?.locale ?? "es", "common");
+
+    const attendeesListPromise = booking.attendees.map(async (attendee) => {
       return {
         name: attendee?.name,
         email: attendee?.email,
@@ -819,9 +822,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     });
 
     const attendeesList = (await Promise.all(attendeesListPromise)) as Person[];
-
-    console.log("attendeesList", attendeesList);
-    console.log("attendeesListPromise", attendeesListPromise);
 
     const evt: CalendarEvent = {
       type: type,
