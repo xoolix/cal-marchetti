@@ -817,7 +817,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       };
     });
 
-    const attendeesList = (await Promise.all(attendeesListPromises)) as Person[];
+    const attendeesList = (await Promise.all(attendeesListPromises)) as any[];
 
     const evt: CalendarEvent = {
       type: type,
