@@ -805,19 +805,23 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const timeZone = String(booking?.user?.timeZone);
     const t = await getTranslation(booking?.user?.locale ?? "es", "common");
 
-    const attendeesListPromises: any = booking?.attendees.map(async (attendee) => {
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    const attendeesListPromise: any = booking?.attendees?.map(async (attendee) => {
       return {
-        name: attendee.name,
-        email: attendee.email,
-        timeZone: attendee.timeZone,
+        name: attendee?.name,
+        email: attendee?.email,
+        timeZone: attendee?.timeZone,
         language: {
-          translate: await getTranslation(attendee.locale ?? "es", "common"),
-          locale: attendee.locale ?? "es",
+          translate: await getTranslation(attendee?.locale ?? "es", "common"),
+          locale: attendee?.locale ?? "es",
         },
       };
     });
 
-    const attendeesList = (await Promise.all(attendeesListPromises)) as any[];
+    const attendeesList = (await Promise.all(attendeesListPromise)) as Person[];
+
+    console.log("attendeesList", attendeesList);
+    console.log("attendeesListPromise", attendeesListPromise);
 
     const evt: CalendarEvent = {
       type: type,
