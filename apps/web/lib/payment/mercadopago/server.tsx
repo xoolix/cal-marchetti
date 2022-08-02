@@ -1,5 +1,6 @@
 import { PaymentType } from "@prisma/client";
 import { EventType } from "@prisma/client";
+import dayjs from "dayjs";
 import { stringify } from "querystring";
 import { v4 as uuidv4 } from "uuid";
 
@@ -36,16 +37,20 @@ export async function handlePaymentMP(
     recur: evt.recurrence,
   };
   const query = stringify(params);
-  //TODO cambiar las urls para cada estado
+
   const successUrl = `${process.env.MP_REDIRECT_URL}/success?${query}`;
   const failureUrl = `${process.env.MP_REDIRECT_URL}/failure?${query}`;
+
+  //Fecha y hora
+  const fecha = String(dayjs(booking.startTime.toISOString()).format("DD-MM-YY"));
+  const hora = String(dayjs(booking.startTime.toISOString()).format("HH:mm"));
 
   //Preference
   const mercadoPagoResponse = await mercadoPagoCall({
     successUrl,
     failureUrl,
     quantity: 1,
-    title: "Turno con Matías Marchetti",
+    title: `Turno con Matías Marchetti | ${fecha} ${hora} hrs`,
     currency: selectedEventType.currency,
     unit_price: Math.trunc(selectedEventType.price / 100),
   });
