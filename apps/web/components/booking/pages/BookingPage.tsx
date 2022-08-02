@@ -672,7 +672,7 @@ const BookingPage = ({
                             ? "border-red-700 focus:ring-red-700"
                             : " border-gray-300  dark:border-gray-900"
                         )}
-                        placeholder="you@example.com"
+                        placeholder="tuemail@ejemplo.com"
                         type="search" // Disables annoying 1password intrusive popup (non-optimal, I know I know...)
                         disabled={disableInput}
                       />
@@ -749,7 +749,7 @@ const BookingPage = ({
                               render={({ field: { onChange, value } }) => (
                                 <ReactMultiEmail
                                   className="relative"
-                                  placeholder="guest@example.com"
+                                  placeholder="invitado@ejemplo.com"
                                   emails={value}
                                   onChange={onChange}
                                   getLabel={(
