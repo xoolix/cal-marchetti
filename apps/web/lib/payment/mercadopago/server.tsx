@@ -42,8 +42,8 @@ export async function handlePaymentMP(
   const failureUrl = `${process.env.MP_REDIRECT_URL}/failure?${query}`;
 
   //Fecha y hora
-  const fecha = dayjs(booking.startTime.toISOString()).format("DD-MM-YY");
-  const hora = dayjs(booking.startTime.toISOString()).format("HH:mm");
+  const fecha = String(dayjs(booking.startTime.toISOString()).format("DD-MM-YY"));
+  const hora = String(dayjs(booking.startTime.toISOString()).format("HH:mm"));
 
   //Preference
   const mercadoPagoResponse = await mercadoPagoCall({
