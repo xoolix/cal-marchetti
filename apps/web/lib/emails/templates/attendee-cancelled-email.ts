@@ -98,7 +98,7 @@ ${this.calEvent.cancellationReason && this.getCancellationReason()}
                               ${this.getWho()}
                               ${this.calEvent.cancellationReason && this.getCancellationReason()}
                             </div>
-                            <div style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:500;line-height:0px;text-align:left;color:#3E3E3E;">
+                            <div style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:500;line-height:0px;text-align:center;color:#3E3E3E;">
                             <p style="font-weight: 700; line-height: 24px;">Cualquier duda o consulta contactarnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
                             </div>
                           </td>
