@@ -665,10 +665,14 @@ const BookingPage = ({
                       )}
                     </div>
                   </div>
-                  <div>
-                    <p className="block text-sm font-medium text-gray-700 dark:text-white">
-                      Forma de pago (seleccionar una opcion)
-                    </p>
+                  <>
+                    {router.query.type === "30" ? (
+                      <p className="block text-sm font-medium text-gray-700 dark:text-white">
+                        Forma de pago (sel eccionar una opcion)
+                      </p>
+                    ) : (
+                      ""
+                    )}
                     {eventType.customInputs.map((input) => (
                       <div className="mb-4" key={input.id}>
                         {input.type === EventTypeCustomInputType.BOOL && (
@@ -692,7 +696,7 @@ const BookingPage = ({
                         )}
                       </div>
                     ))}
-                  </div>
+                  </>
                   {locations.length > 1 && (
                     <div className="mb-4">
                       <span className="block text-sm font-medium text-gray-700 dark:text-white">

@@ -166,6 +166,12 @@ ${getRichDescription(this.calEvent)}
                               ${this.getWhat()}
                               ${this.getWhen()}
                               ${this.getWho()}
+                              ${
+                                this.calEvent.type === "Seguimiento" ||
+                                this.calEvent.type === "Primera consulta"
+                                  ? this.presencial()
+                                  : this.online()
+                              }
                             </div>
                           </td>
                         </tr>
@@ -314,6 +320,28 @@ ${getRichDescription(this.calEvent)}
     `;
   }
 
+  protected online(): string {
+    return `
+    <p style="height: 6px"></p>
+    <div style="line-height: 6px;">
+      <p style="color: #494949;">Lugar</p>
+      <p style="color: #494949; font-weight: 400;">
+        Online (comunicarse con Mati)
+      </p>
+    </div>
+  `;
+  }
+  protected presencial(): string {
+    return `
+    <p style="height: 6px"></p>
+    <div style="line-height: 6px;">
+      <p style="color: #494949;">Lugar</p>
+      <p style="color: #494949; font-weight: 400;">
+        Arenales 1611 Piso 3, CABA
+      </p>
+    </div>
+  `;
+  }
   protected getCustomInputs(): string {
     const { customInputs } = this.calEvent;
     if (!customInputs) return "";
