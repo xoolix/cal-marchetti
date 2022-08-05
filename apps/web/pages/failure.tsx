@@ -1,14 +1,15 @@
 import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 
+import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { bookingMinimalSelect } from "@calcom/prisma";
 import { Prisma } from "@calcom/prisma/client";
-import { CalendarEvent } from "@calcom/types/Calendar";
 import { Button } from "@calcom/ui";
 
-import { sendAwaitingPaymentEmail } from "@lib/emails/email-manager";
 import prisma from "@lib/prisma";
+import { collectPageParameters, telemetryEventTypes, useTelemetry } from "@lib/telemetry";
 import { inferSSRProps } from "@lib/types/inferSSRProps";
 
 import { HeadSeo } from "@components/seo/head-seo";
@@ -16,7 +17,11 @@ import { HeadSeo } from "@components/seo/head-seo";
 function PlaceholderFailure(props: inferSSRProps<typeof getServerSideProps>) {
   const data = props?.payment?.data as Prisma.JsonObject;
   const link = data.init_point as string;
-
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const query = router.query;
+  const telemetry = useTelemetry();
+  const { t } = useLocale();
   return (
     <>
       <HeadSeo title="Error en el pago" description="" nextSeoProps={{}} />
@@ -38,11 +43,35 @@ function PlaceholderFailure(props: inferSSRProps<typeof getServerSideProps>) {
               <Link href={link}>
                 <Button className="mt-3">Pagar</Button>
               </Link>
-              <Link href={props.returnUrl}>
-                <Button color="secondary" className="mt-5 ml-5">
-                  Reintentar
-                </Button>
-              </Link>
+              <Button
+                className="ml-3"
+                data-testid="cancel"
+                onClick={async () => {
+                  setLoading(true);
+
+                  const payload = {
+                    uid: query?.uid,
+                  };
+
+                  telemetry.withJitsu((jitsu) =>
+                    jitsu.track(telemetryEventTypes.bookingCancelled, collectPageParameters())
+                  );
+
+                  const res = await fetch("/api/cancel", {
+                    body: JSON.stringify(payload),
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    method: "DELETE",
+                  });
+
+                  if (res.status >= 200 && res.status < 300) {
+                    await router.push(`/marchettirules/${router.query.eventSlug}`);
+                  }
+                }}
+                loading={loading}>
+                Reintentar
+              </Button>
             </span>
           </div>
         </main>

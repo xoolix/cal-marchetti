@@ -35,6 +35,7 @@ export async function handlePaymentMP(
     location: evt.location,
     bookingId: booking.id,
     recur: evt.recurrence,
+    uid: booking?.uid,
   };
   const query = stringify(params);
 

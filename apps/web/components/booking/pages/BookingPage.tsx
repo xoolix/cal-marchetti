@@ -621,6 +621,7 @@ const BookingPage = ({
                             className={inputClassName}
                             placeholder={input.placeholder}
                             disabled={disabledExceptForOwner}
+                            required
                           />
                         )}
                         {input.type === EventTypeCustomInputType.NUMBER && (
@@ -630,9 +631,10 @@ const BookingPage = ({
                               required: input.required,
                             })}
                             id={"custom_" + input.id}
-                            className={inputClassName}
+                            className={classNames(inputClassName, bookingForm.setError)}
                             placeholder="Teléfono"
                             disabled={disabledExceptForOwner}
+                            required
                           />
                         )}
                       </div>
@@ -666,9 +668,9 @@ const BookingPage = ({
                     </div>
                   </div>
                   <>
-                    {router.query.type === "30" ? (
+                    {router.query.type === "30" || router.query.type === "27" ? (
                       <p className="block text-sm font-medium text-gray-700 dark:text-white">
-                        Forma de pago (sel eccionar una opcion)
+                        Forma de pago (seleccionar una opcion)
                       </p>
                     ) : (
                       ""
@@ -686,6 +688,7 @@ const BookingPage = ({
                               className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black disabled:bg-gray-200 ltr:mr-2 rtl:ml-2 disabled:dark:text-gray-500"
                               placeholder=""
                               disabled={disabledExceptForOwner}
+                              required={router.query.type === "27" ? true : false}
                             />
                             <label
                               htmlFor={"custom_" + input.id}
