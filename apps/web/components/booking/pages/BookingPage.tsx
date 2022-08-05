@@ -621,6 +621,7 @@ const BookingPage = ({
                             className={inputClassName}
                             placeholder={input.placeholder}
                             disabled={disabledExceptForOwner}
+                            required
                           />
                         )}
                         {input.type === EventTypeCustomInputType.NUMBER && (
@@ -630,9 +631,10 @@ const BookingPage = ({
                               required: input.required,
                             })}
                             id={"custom_" + input.id}
-                            className={inputClassName}
+                            className={classNames(inputClassName, bookingForm.setError)}
                             placeholder="Teléfono"
                             disabled={disabledExceptForOwner}
+                            required
                           />
                         )}
                       </div>
@@ -668,7 +670,14 @@ const BookingPage = ({
                   <>
                     {router.query.type === "30" ? (
                       <p className="block text-sm font-medium text-gray-700 dark:text-white">
-                        Forma de pago (sel eccionar una opcion)
+                        Forma de pago (seleccionar una opcion)
+                      </p>
+                    ) : (
+                      ""
+                    )}
+                    {router.query.type === "27" ? (
+                      <p className="block text-sm font-medium text-gray-700 dark:text-white">
+                        Forma de pago: MercadoPago (serás redirigido automaticamente).
                       </p>
                     ) : (
                       ""
