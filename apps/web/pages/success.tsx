@@ -5,6 +5,7 @@ import { Attendee } from "@prisma/client";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import classNames from "classnames";
 import dayjs from "dayjs";
+import es from "dayjs/locale/es";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import timezone from "dayjs/plugin/timezone";
 import toArray from "dayjs/plugin/toArray";
@@ -58,6 +59,7 @@ dayjs.extend(utc);
 dayjs.extend(toArray);
 dayjs.extend(timezone);
 dayjs.extend(localizedFormat);
+dayjs.locale("es");
 
 function redirectToExternalUrl(url: string) {
   window.parent.location.href = url;
@@ -258,7 +260,7 @@ export default function Success(props: SuccessProps) {
       }
       return t("needs_to_be_confirmed_or_rejected" + titleSuffix);
     }
-    return t("emailed_you_and_attendees" + titleSuffix);
+    return t("detalles" + titleSuffix);
   }
   const userIsOwner = !!(session?.user?.id && eventType.users.find((user) => (user.id = session.user.id)));
   const { isReady, Theme } = useTheme(userIsOwner ? "light" : props.profile.theme);
@@ -336,8 +338,10 @@ export default function Success(props: SuccessProps) {
                             : isCancelled
                             ? t("event_cancelled")
                             : props.recurringBookings
-                            ? t("meeting_is_scheduled_recurring")
-                            : t("meeting_is_scheduled")}
+                            ? t("reunion_confirmada")
+                            : router.query.type === "38" || router.query.type === "37"
+                            ? t("reunion_confirmada_online")
+                            : t("reunion_confirmada")}
                         </h3>
                         <div className="mt-3">
                           <p className="text-sm text-neutral-600 dark:text-gray-300">{getTitle()}</p>
@@ -628,6 +632,7 @@ function RecurringBookings({
 }: RecurringBookingsProps) {
   const [moreEventsVisible, setMoreEventsVisible] = useState(false);
   const { t } = useLocale();
+
   return !isReschedule && recurringBookings && listingStatus === "upcoming" ? (
     <>
       {eventType.recurringEvent?.count &&
@@ -666,7 +671,8 @@ function RecurringBookings({
     </>
   ) : (
     <>
-      {date.format("MMMM DD, YYYY")}
+      {console.log(date)}
+      {date.format("DD/MM/YYYY")}
       <br />
       {date.format("LT")} - {date.add(eventType.length, "m").format("LT")}{" "}
       <span className="text-bookinglight">

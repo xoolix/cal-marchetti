@@ -173,6 +173,9 @@ ${getRichDescription(this.calEvent)}
                                   : this.online()
                               }
                             </div>
+                            <div style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:500;line-height:1;text-align:left;color:#3E3E3E;">
+                            ${this.getEmailText()}
+                            </div>
                           </td>
                         </tr>
                       </tbody>
@@ -217,13 +220,34 @@ ${getRichDescription(this.calEvent)}
     `;
   }
 
+  protected getEmailText(): string {
+    if (this.calEvent.type === "Primera consulta") {
+      return `
+      <br/>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Ese día vas abonar el saldo restante de la consulta que puede ser por transferencia, mercado pago o efectivo. 
+      Favor de concurrir 15 min antes de la consulta y con ropa cómoda para las mediciones.</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Cualquier duda o consulta contactarnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Muchas gracias, ¡Te espero! 🤗</p>
+      <br/>
+      `;
+    } else {
+      return `
+      <br/>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Ese día vas a abonar el saldo de la consulta por transferencia, mercado pago o efectivo. Favor de enviar el comprobante a nuestro whatsapp para registrarlo en el sistema.
+      Concurrir 15 min antes de la consulta y con ropa cómoda para las mediciones.</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Cualquier duda o consulta contactarnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Muchas gracias, ¡Te espero! 🤗</p>
+      <br/>
+      `;
+    }
+  }
+
   protected getManageLink(): string {
     // Only the original attendee can make changes to the event
     // Guests cannot
     if (this.attendee === this.calEvent.attendees[0]) {
       const manageText = this.calEvent.attendees[0].language.translate("manage_this_event");
       return `
-      <p style="font-weight: 700; line-height: 24px;">Cualquier duda o consulta contactarnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
       <br/>
       <p>${this.calEvent.attendees[0].language.translate("need_to_reschedule_or_cancel")}</p>
       <p style="font-weight: 400; color: red; line-height: 24px;">Si necesitás cancelar o cambiar tu turno por algún imprevisto (¡que suceden y los comprendemos!), te pedimos que lo hagas 24 horas antes de la consulta, para poder otorgar ese lugar a otra persona y que todos tengan la oportunidad de comenzar su cambio. En caso contrario, se cobrará una penalidad. ¡Gracias por tu comprensión!</p>
@@ -231,7 +255,6 @@ ${getRichDescription(this.calEvent)}
         this.calEvent
       )}" style="color: #3E3E3E;" alt="${manageText}">${manageText}</a></p>`;
     }
-
     return "";
   }
 
@@ -291,9 +314,7 @@ ${getRichDescription(this.calEvent)}
       })
       .join("");
 
-    const organizer = `<div style="color: #494949; font-weight: 400; line-height: 24px;">${
-      this.calEvent.organizer.name
-    } - ${this.calEvent.attendees[0].language.translate(
+    const organizer = `<div style="color: #494949; font-weight: 400; line-height: 24px;">Matias Marchetti - ${this.calEvent.attendees[0].language.translate(
       "organizer"
     )} <span style="color: #888888"><a href="mailto:${
       this.calEvent.organizer.email
@@ -325,9 +346,7 @@ ${getRichDescription(this.calEvent)}
     <p style="height: 6px"></p>
     <div style="line-height: 6px;">
       <p style="color: #494949;">Lugar</p>
-      <p style="color: #494949; font-weight: 400;">
-        Online (comunicarse con Mati)
-      </p>
+      <p style="color: #494949; font-weight: 400; line-height: 24px;">Online (comunicarse con Mati)</p>
     </div>
   `;
   }
@@ -336,12 +355,11 @@ ${getRichDescription(this.calEvent)}
     <p style="height: 6px"></p>
     <div style="line-height: 6px;">
       <p style="color: #494949;">Lugar</p>
-      <p style="color: #494949; font-weight: 400;">
-        Arenales 1611 Piso 3, CABA
-      </p>
+      <p style="color: #494949; font-weight: 400; line-height: 24px;"> Arenales 1611 Piso 3, CABA</p>
     </div>
   `;
   }
+
   protected getCustomInputs(): string {
     const { customInputs } = this.calEvent;
     if (!customInputs) return "";
