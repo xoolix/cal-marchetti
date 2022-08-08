@@ -412,7 +412,7 @@ export default function Success(props: SuccessProps) {
                                   {customInput !== "" && (
                                     <>
                                       <div className="mt-2 pr-3 font-medium">
-                                        {customInput === false ? "" : key.replaceAll("_", " ")}
+                                        {customInput === null ? "" : key.replaceAll("_", " ")}
                                       </div>
                                       <div className="col-span-2 mt-2 mb-2">
                                         {typeof customInput === "boolean" ? (
@@ -421,6 +421,7 @@ export default function Success(props: SuccessProps) {
                                           <p>{customInput}</p>
                                         )}
                                       </div>
+                                      {console.log(customInput)}
                                     </>
                                   )}
                                 </>
