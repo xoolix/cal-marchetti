@@ -422,11 +422,11 @@ const BookingPage = ({
     }
   };
 
+  const [checked, setChecked] = useState(true);
   const disableInput = !!rescheduleUid;
   const disabledExceptForOwner = disableInput && !loggedInIsOwner;
   const inputClassName =
     "focus:border-brand block w-full rounded-sm border-gray-300 shadow-sm focus:ring-black disabled:bg-gray-200 disabled:hover:cursor-not-allowed dark:border-gray-900 dark:bg-gray-700 dark:text-white dark:selection:bg-green-500 disabled:dark:text-gray-500 sm:text-sm";
-
   return (
     <div>
       <Theme />
@@ -670,7 +670,7 @@ const BookingPage = ({
                   <>
                     {router.query.type === "30" || router.query.type === "27" ? (
                       <p className="block text-sm font-medium text-gray-700 dark:text-white">
-                        Forma de pago (seleccionar una opcion)
+                        Forma de pago (seleccionar una sola opcion)
                       </p>
                     ) : (
                       ""
@@ -680,15 +680,17 @@ const BookingPage = ({
                         {input.type === EventTypeCustomInputType.BOOL && (
                           <div className="flex h-5 items-center">
                             <input
-                              type="checkbox"
+                              type="radio"
                               {...bookingForm.register(`customInputs.${input.id}`, {
                                 required: input.required,
                               })}
                               id={"custom_" + input.id}
                               className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black disabled:bg-gray-200 ltr:mr-2 rtl:ml-2 disabled:dark:text-gray-500"
                               placeholder=""
+                              value={"Si"}
                               disabled={disabledExceptForOwner}
-                              required={router.query.type === "27" ? true : false}
+                              required={checked}
+                              onChange={(e) => setChecked(!checked)}
                             />
                             <label
                               htmlFor={"custom_" + input.id}

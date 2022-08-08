@@ -268,6 +268,7 @@ export default function Success(props: SuccessProps) {
     `booking_${needsConfirmation ? "submitted" : "confirmed"}${props.recurringBookings ? "_recurring" : ""}`
   );
   const customInputs = bookingInfo?.customInputs;
+  console.log(customInputs);
   return (
     (isReady && (
       <>
@@ -671,7 +672,6 @@ function RecurringBookings({
     </>
   ) : (
     <>
-      {console.log(date)}
       {date.format("DD/MM/YYYY")}
       <br />
       {date.format("LT")} - {date.add(eventType.length, "m").format("LT")}{" "}
