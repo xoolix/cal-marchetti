@@ -51,7 +51,7 @@ export async function handlePaymentMP(
     successUrl,
     failureUrl,
     quantity: 1,
-    title: `Turno con Matías Marchetti | ${fecha} ${hora} hrs`,
+    title: `Turno con Matías Marchetti | ${fecha}`,
     currency: selectedEventType.currency,
     unit_price: Math.trunc(selectedEventType.price / 100),
   });

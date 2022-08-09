@@ -33,7 +33,7 @@ function PlaceholderFailure(props: inferSSRProps<typeof getServerSideProps>) {
               alt="Logo Marchetti Rules"
               style={{ height: "50px", margin: "auto", marginBottom: "30px" }}
             />
-            <p className="text-sm font-semibold uppercase tracking-wide text-black">¡Disculpe!</p>
+            <p className="text-sm font-semibold uppercase tracking-wide text-black">¡UPS!</p>
             <h1 className="font-cal mt-2 text-4xl font-extrabold text-gray-900 sm:text-5xl">
               Hubo un problema en el pago
             </h1>
