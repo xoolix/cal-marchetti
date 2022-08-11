@@ -47,7 +47,7 @@ export const ExcelExport = ({ booking }) => {
   return (
     <>
       <ExcelFile
-        filename="Turnos"
+        filename="Turnos #MR"
         element={
           <Button onClick={updateData} className="mt-1 ml-2 mb-2" color="secondary">
             Excel
