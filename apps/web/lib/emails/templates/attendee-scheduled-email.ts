@@ -145,6 +145,9 @@ ${getRichDescription(this.calEvent)}
           this.calEvent.attendees[0].language.translate(
             this.recurringEvent?.count
               ? "your_event_has_been_scheduled_recurring"
+              : this.calEvent.type === "Plan Online - 1er Consulta" ||
+                this.calEvent.type === "Plan Online - Consulta Seguimiento"
+              ? "your_event_has_been_scheduled_online"
               : "your_event_has_been_scheduled"
           ),
           this.calEvent.attendees[0].language.translate("")
@@ -167,10 +170,12 @@ ${getRichDescription(this.calEvent)}
                               ${this.getWhen()}
                               ${this.getWho()}
                               ${
-                                this.calEvent.type === "Seguimiento" ||
-                                this.calEvent.type === "Primera consulta"
+                                this.calEvent.type === "Consulta Seguimiento Presencial" ||
+                                this.calEvent.type === "Primera Consulta Presencial"
                                   ? this.presencial()
-                                  : this.online()
+                                  : this.calEvent.type === "Plan Online - 1er Consulta"
+                                  ? this.online()
+                                  : this.onlineSeguimiento()
                               }
                             </div>
                             <div style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:500;line-height:1;text-align:left;color:#3E3E3E;">
@@ -221,24 +226,58 @@ ${getRichDescription(this.calEvent)}
   }
 
   protected getEmailText(): string {
-    if (this.calEvent.type === "Primera consulta") {
+    if (this.calEvent.type === "Primera Consulta Presencial") {
       return `
       <br/>
-      <p style="font-weight: 700; line-height: 24px; color: #494949;">Ese día vas abonar el saldo restante de la consulta que puede ser por transferencia, mercado pago o efectivo. 
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Ese día vas a abonar el saldo restante de la consulta que puede ser por transferencia, mercado pago o efectivo. 
       Favor de concurrir 15 min antes de la consulta y con ropa cómoda para las mediciones.</p>
-      <p style="font-weight: 700; line-height: 24px; color: #494949;">Cualquier duda o consulta contactarnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Cualquier duda o consulta contactarnos a nuestro WhatsApp de turnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
       <p style="font-weight: 700; line-height: 24px; color: #494949;">Muchas gracias, ¡Te espero! 🤗</p>
+      <br/>
+      `;
+    } else if (this.calEvent.type === "Plan Online - 1er Consulta") {
+      return `
+      <br/>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Te detallamos la info para que puedas estar preparad@ el día de la consulta con Matías:</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Los parámetros a compartirle por WhatsApp previo a la cita son:</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">•	Edad</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">•	Peso</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">•	Altura</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">•	Foto de frente y perfil</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">•	Y las siguientes medidas como antropometría corporal inicial:</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">👉 Medida del perímetro de la cintura (justo encima del ombligo)</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">👉 Medida del pecho (justo a la altura de las axilas)</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Todo esto servirá para comenzar a trabajar en conjunto con Matias tu plan personalizado.</p>
+      <p style="font-weight: 700; line-height: 24px; color: red;">❗️IMPORTANTE</p>
+      <p style="font-weight: 700; line-height: 24px; color: red;">Te solicitamos que el día y horario de la cita realices la videollamada al celular de Matias (11-6466-5711) para tener tu cita.</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">¿Cómo continúa?</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">💪 Luego de la primera consulta y que Matías te envíe tu plan a medida, vas a tener que enviarle diariamente:</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">📸 Foto de todas las comidas del día (durante toda la semana)</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">📅 Agendar la consulta de seguimiento a la semana en el siguiente link> https://turnos-marchetti.vercel.app/marchettirules/plan-online-consulta-seguimiento</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Con esa información Matías va a poder darte seguimiento, sugerirte correcciones y/o ajustes en este trabajo juntos. Vas a poder consultarle cualquier inquietud por Whatsapp. Matias habitualmente responde todos los mensajes a primera hora del día 🙂😉, por eso capaz recibas mas tarde tu respuesta (Igualmente si tenés una consulta urgente y el tema no puede esperar, lo podés llamar pero pedimos que sea en casos de suma urgencia, ya que está atendiendo 😊).</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Cualquier duda o consulta contactarnos a nuestro WhatsApp de turnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Muchas gracias, ¡éxitos con tu plan! 🤗</p>
+      <br/>
+      `;
+    } else if (this.calEvent.type === "Consulta Seguimiento Presencial") {
+      return `
+      <br/>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Ese día vas a abonar el saldo de la consulta por transferencia, mercado pago o efectivo. Favor de enviar el comprobante a nuestro whatsapp para registrarlo en el sistema.</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Concurrir 15 min antes de la consulta y con ropa cómoda para las mediciones.</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Cualquier duda o consulta contactarnos a nuestro WhatsApp de turnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Muchas gracias, ¡Te espero! 🤗</p>
+      <br/>
+      `;
+    } else if (this.calEvent.type === "Plan Online - Consulta Seguimiento") {
+      return `
+      <br/>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Enviar las medidas corporales y peso previo a la consulta y una vez hecha la hora, llamarlo a través de whatsapp.</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Cualquier duda o consulta contactarnos a nuestro WhatsApp de turnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Muchas gracias, ¡que tengas un excelente día! 🤗</p>
       <br/>
       `;
     } else {
-      return `
-      <br/>
-      <p style="font-weight: 700; line-height: 24px; color: #494949;">Ese día vas a abonar el saldo de la consulta por transferencia, mercado pago o efectivo. Favor de enviar el comprobante a nuestro whatsapp para registrarlo en el sistema.
-      Concurrir 15 min antes de la consulta y con ropa cómoda para las mediciones.</p>
-      <p style="font-weight: 700; line-height: 24px; color: #494949;">Cualquier duda o consulta contactarnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
-      <p style="font-weight: 700; line-height: 24px; color: #494949;">Muchas gracias, ¡Te espero! 🤗</p>
-      <br/>
-      `;
+      return "";
     }
   }
 
@@ -346,10 +385,21 @@ ${getRichDescription(this.calEvent)}
     <p style="height: 6px"></p>
     <div style="line-height: 6px;">
       <p style="color: #494949;">Lugar</p>
-      <p style="color: #494949; font-weight: 400; line-height: 24px;">Online (comunicarse con Mati)</p>
+      <p style="color: #494949; font-weight: 400; line-height: 24px;">Online (Comunicarse con Mati al +54 9 1164665711)</p>
     </div>
   `;
   }
+
+  protected onlineSeguimiento(): string {
+    return `
+    <p style="height: 6px"></p>
+    <div style="line-height: 6px;">
+      <p style="color: #494949;">Lugar</p>
+      <p style="color: #494949; font-weight: 400; line-height: 24px;">Online (En el día y horario de la cita favor de realizar la videollamada al celular de Matias (11-6466-5711))</p>
+    </div>
+  `;
+  }
+
   protected presencial(): string {
     return `
     <p style="height: 6px"></p>
