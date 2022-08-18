@@ -492,12 +492,7 @@ function UserDropdown({ small }: { small?: boolean }) {
           {!small && (
             <span className="flex flex-grow items-center truncate">
               <span className="flex-grow truncate text-sm">
-                <span className="block truncate font-medium text-gray-900">
-                  {user?.username || "Nameless User"}
-                </span>
-                <span className="block truncate font-normal text-neutral-500">
-                  {user?.username ? `cal.com/${user.username}` : "No public page"}
-                </span>
+                <span className="block truncate font-medium text-gray-900">#MarchettiRules</span>
               </span>
               <SelectorIcon
                 className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
