@@ -52,7 +52,7 @@ export async function handlePaymentMP(
     failureUrl,
     quantity: 1,
     title: `Turno con Matías Marchetti | ${fecha}`,
-    currency: selectedEventType.currency,
+    currency: "ARS",
     unit_price: Math.trunc(selectedEventType.price / 100),
   });
   const mpPayment = await prisma.payment.create({
