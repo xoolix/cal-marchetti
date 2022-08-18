@@ -176,7 +176,9 @@ ${getRichDescription(this.calEvent)}
                                   ? this.presencial()
                                   : this.calEvent.type === "Plan Online - 1er Consulta"
                                   ? this.online()
-                                  : this.onlineSeguimiento()
+                                  : this.calEvent.type === "Plan Online - Consulta Seguimiento"
+                                  ? this.onlineSeguimiento()
+                                  : this.getLocation()
                               }
                             </div>
                             <div style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:500;line-height:1;text-align:left;color:#3E3E3E;">

@@ -53,8 +53,8 @@ export default function Login({
 
   const errorMessages: { [key: string]: string } = {
     // [ErrorCode.SecondFactorRequired]: t("2fa_enabled_instructions"),
-    [ErrorCode.IncorrectPassword]: `${t("incorrect_password")} ${t("please_try_again")}`,
-    [ErrorCode.UserNotFound]: t("no_account_exists"),
+    [ErrorCode.IncorrectPassword]: `${t("Contraseña incorrecta.")} ${t("Intentelo nuevamente")}`,
+    [ErrorCode.UserNotFound]: t("No existe cuenta registrada con ese email."),
     [ErrorCode.IncorrectTwoFactorCode]: `${t("incorrect_2fa_code")} ${t("please_try_again")}`,
     [ErrorCode.InternalServerError]: `${t("something_went_wrong")} ${t("please_try_again_and_contact_us")}`,
     [ErrorCode.ThirdPartyIdentityProviderEnabled]: t("account_created_with_identity_provider"),
@@ -75,9 +75,9 @@ export default function Login({
 
   const LoginFooter = (
     <span>
-      {t("dont_have_an_account")}{" "}
+      {t("No tienes una cuenta?")}{" "}
       <a href={`${WEBSITE_URL}/signup`} className="font-medium text-neutral-900">
-        {t("create_an_account")}
+        {t("Crear una")}
       </a>
     </span>
   );
@@ -97,10 +97,10 @@ export default function Login({
   return (
     <>
       <AuthContainer
-        title={t("login")}
-        description={t("login")}
+        title={t("Ingresar")}
+        description={t("Ingresar")}
         showLogo
-        heading={twoFactorRequired ? t("2fa_code") : t("sign_in_account")}
+        heading={twoFactorRequired ? t("2fa_code") : t("Ingresa a tu cuenta")}
         footerText={twoFactorRequired ? TwoFactorFooter : LoginFooter}>
         <Form
           form={form}
@@ -133,7 +133,7 @@ export default function Login({
           <div className={classNames("space-y-6", { hidden: twoFactorRequired })}>
             <EmailField
               id="email"
-              label={t("email_address")}
+              label={t("Email")}
               placeholder="john.doe@example.com"
               required
               {...form.register("email")}
@@ -142,7 +142,7 @@ export default function Login({
               <div className="absolute right-0 -top-[2px]">
                 <Link href="/auth/forgot-password">
                   <a tabIndex={-1} className="text-primary-600 text-sm font-medium">
-                    {t("forgot")}
+                    {t("Olvidaste la contraseña?")}
                   </a>
                 </Link>
               </div>
@@ -161,7 +161,7 @@ export default function Login({
           {errorMessage && <Alert severity="error" title={errorMessage} />}
           <div className="flex space-y-2">
             <Button className="flex w-full justify-center" type="submit" disabled={isSubmitting}>
-              {twoFactorRequired ? t("submit") : t("sign_in")}
+              {twoFactorRequired ? t("submit") : t("Ingresar")}
             </Button>
           </div>
         </Form>
