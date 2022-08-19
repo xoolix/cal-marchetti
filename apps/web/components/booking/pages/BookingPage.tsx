@@ -116,6 +116,8 @@ const BookingPage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(router.query);
+
   useEffect(() => {
     if (eventType.metadata.smartContractAddress) {
       const eventOwner = eventType.users[0];
@@ -394,6 +396,7 @@ const BookingPage = ({
         hasHashedBookingLink,
         hashedLink,
       }));
+      console.log(booking);
       recurringMutation.mutate(recurringBookings);
     } else {
       mutation.mutate({
@@ -419,6 +422,7 @@ const BookingPage = ({
         hasHashedBookingLink,
         hashedLink,
       });
+      console.log(booking);
     }
   };
 
@@ -668,7 +672,9 @@ const BookingPage = ({
                     </div>
                   </div>
                   <>
-                    {router.query.type === "30" || router.query.type === "27" ? (
+                    {router.query.type === "30" ||
+                    router.query.type === "27" ||
+                    router.query.type === "51" ? (
                       <p className="block text-sm font-medium text-gray-700 dark:text-white">
                         Forma de pago (seleccionar una sola opcion)
                       </p>

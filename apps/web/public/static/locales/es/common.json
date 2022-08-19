@@ -283,7 +283,7 @@
   "reset_instructions": "Introduzca el email asociado a su cuenta y le enviaremos un enlace para restablecer su contraseña.",
   "request_is_expired_instructions": "La solicitud ha caducado. Vuelve e introduce el email asociado a tu cuenta y te enviaremos otro enlace para restablecer tu contraseña.",
   "whoops": "Ups",
-  "login": "Entrar",
+  "login": "Ingresar",
   "success": "Éxito",
   "failed": "Falló",
   "password_has_been_reset_login": "Su contraseña ha sido restablecida. Ahora puede iniciar sesión con su nueva contraseña.",
