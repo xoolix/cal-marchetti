@@ -84,6 +84,7 @@ export default function ForgotPassword({ csrfToken }: { csrfToken: string }) {
 
   return (
     <AuthContainer
+      showLogo
       title={t("forgot_password")}
       description={t("request_password_reset")}
       heading={t("forgot_password")}
@@ -109,7 +110,7 @@ export default function ForgotPassword({ csrfToken }: { csrfToken: string }) {
               id="email"
               name="email"
               label={t("email_address")}
-              placeholder="john.doe@example.com"
+              placeholder="tu.email@ejemplo.com"
               required
             />
             <div className="space-y-2">
