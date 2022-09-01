@@ -694,9 +694,9 @@ const BookingPage = ({
                               className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black disabled:bg-gray-200 ltr:mr-2 rtl:ml-2 disabled:dark:text-gray-500"
                               placeholder=""
                               value={"Si"}
-                              name={"btns"}
                               disabled={disabledExceptForOwner}
                               required={checked}
+                              name="buttons"
                               onChange={(e) => setChecked(!checked)}
                             />
                             <label

@@ -34,7 +34,7 @@ import { bookingMinimalSelect } from "@calcom/prisma";
 import { Prisma } from "@calcom/prisma/client";
 import { RecurringEvent, CalendarEvent } from "@calcom/types/Calendar";
 import { Person } from "@calcom/types/Calendar";
-import Button from "@calcom/ui/Button";
+import { Button } from "@calcom/ui";
 import { EmailInput } from "@calcom/ui/form/fields";
 
 import { asStringOrThrow } from "@lib/asStringOrNull";
@@ -267,8 +267,29 @@ export default function Success(props: SuccessProps) {
   const title = t(
     `booking_${needsConfirmation ? "submitted" : "confirmed"}${props.recurringBookings ? "_recurring" : ""}`
   );
+
   const customInputs = bookingInfo?.customInputs;
-  console.log(customInputs);
+  const attendeesList: unknown = props?.bookingInfo?.attendees[0];
+
+  const evt: CalendarEvent = {
+    type: props?.bookingInfo?.title || "",
+    title: props?.bookingInfo?.title || "",
+    description: props?.bookingInfo?.description || "",
+    startTime: date.toISOString(),
+    endTime: "",
+    customInputs: isPrismaObjOrUndefined(props?.bookingInfo?.customInputs),
+    organizer: {
+      email: props?.profile.email || "",
+      name: props?.profile.name || "",
+      timeZone: "America/Argentina/Buenos_Aires",
+      language: { translate: t, locale: "es" },
+    },
+    attendees: attendeesList as Person[],
+    uid: props?.bookingInfo?.uid,
+    destinationCalendar: null,
+  };
+  console.log(evt);
+
   return (
     (isReady && (
       <>
@@ -421,7 +442,6 @@ export default function Success(props: SuccessProps) {
                                           <p>{customInput}</p>
                                         )}
                                       </div>
-                                      {console.log(customInput)}
                                     </>
                                   )}
                                 </>
@@ -561,6 +581,18 @@ export default function Success(props: SuccessProps) {
                         </div>
                       </div>
                     )}
+                    <div className="border-bookinglightest text-bookingdark pt-5 text-center">
+                      <div>
+                        <Button
+                          color="secondary"
+                          className="m-auto text-center"
+                          onClick={async () => {
+                            const res = await sendScheduledEmails({ ...evt }, eventType.recurringEvent);
+                          }}>
+                          Reenviar email
+                        </Button>
+                      </div>
+                    </div>
                     {!(userIsOwner || props.hideBranding) && (
                       <div className="border-bookinglightest text-booking-lighter pt-4 text-center text-xs dark:border-gray-900 dark:text-white">
                         <a href="https://cal.com/signup">{t("create_booking_link_with_calcom")}</a>
@@ -817,7 +849,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const name = String(booking.user?.name);
     const timeZone = String(booking.user?.timeZone);
     const t = await getTranslation(booking.user?.locale ?? "es", "common");
-
     const attendeesListPromise = booking.attendees.map(async (attendee) => {
       return {
         name: attendee?.name,
@@ -849,7 +880,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       uid: booking?.uid,
       destinationCalendar: booking?.destinationCalendar || booking?.destinationCalendar,
     };
-
     const eventType = {
       recurringEvent: (eventTypeRaw?.recurringEvent || {}) as RecurringEvent,
     };
@@ -958,6 +988,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         select: {
           name: true,
           email: true,
+          timeZone: true,
+          locale: true,
         },
       },
     },
@@ -974,7 +1006,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     });
   }
-
   return {
     props: {
       hideBranding: eventType.team ? eventType.team.hideBranding : isBrandingHidden(eventType.users[0]),
