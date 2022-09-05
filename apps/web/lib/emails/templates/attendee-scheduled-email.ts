@@ -233,10 +233,13 @@ ${getRichDescription(this.calEvent)}
   }
 
   protected getEmailText(): string {
-    if (this.calEvent.type === "Primera Consulta Presencial") {
+    if (
+      this.calEvent.type === "Primera Consulta Presencial" ||
+      this.calEvent.type === "Primera Consulta Presencial - Pago Completo"
+    ) {
       return `
       <br/>
-      <p style="font-weight: 700; line-height: 24px; color: #494949;">Ese día vas a abonar el saldo restante de la consulta que puede ser por transferencia, mercado pago o efectivo. 
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">Ese día vas a abonar el saldo restante de la consulta (en caso de no haber realizado el pago completo), este puede ser por transferencia, mercado pago o efectivo. 
       Favor de concurrir 15 min antes de la consulta y con ropa cómoda para las mediciones.</p>
       <p style="font-weight: 700; line-height: 24px; color: #494949;">Cualquier duda o consulta contactarnos a nuestro WhatsApp de turnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
       <p style="font-weight: 700; line-height: 24px; color: #494949;">Muchas gracias, ¡Te espero! 🤗</p>
@@ -260,7 +263,7 @@ ${getRichDescription(this.calEvent)}
       <p style="font-weight: 700; line-height: 24px; color: #494949;">¿Cómo continúa?</p>
       <p style="font-weight: 700; line-height: 24px; color: #494949;">💪 Luego de la primera consulta y que Matías te envíe tu plan a medida, vas a tener que enviarle diariamente:</p>
       <p style="font-weight: 700; line-height: 24px; color: #494949;">📸 Foto de todas las comidas del día (durante toda la semana)</p>
-      <p style="font-weight: 700; line-height: 24px; color: #494949;">📅 Agendar la consulta de seguimiento a la semana en el siguiente link> https://turnos-marchetti.vercel.app/marchettirules/plan-online-consulta-seguimiento</p>
+      <p style="font-weight: 700; line-height: 24px; color: #494949;">📅 Agendar la consulta de seguimiento a la semana en el siguiente link> https://turnos.marchettirules.com/marchettirules/plan-online-consulta-seguimiento</p>
       <p style="font-weight: 700; line-height: 24px; color: #494949;">Con esa información Matías va a poder darte seguimiento, sugerirte correcciones y/o ajustes en este trabajo juntos. Vas a poder consultarle cualquier inquietud por Whatsapp. Matias habitualmente responde todos los mensajes a primera hora del día 🙂😉, por eso capaz recibas mas tarde tu respuesta (Igualmente si tenés una consulta urgente y el tema no puede esperar, lo podés llamar pero pedimos que sea en casos de suma urgencia, ya que está atendiendo 😊).</p>
       <p style="font-weight: 700; line-height: 24px; color: #494949;">Cualquier duda o consulta contactarnos a nuestro WhatsApp de turnos al <a href="https://wa.me/5491162430189">+5491162430189</a></p>
       <p style="font-weight: 700; line-height: 24px; color: #494949;">Muchas gracias, ¡éxitos con tu plan! 🤗</p>
