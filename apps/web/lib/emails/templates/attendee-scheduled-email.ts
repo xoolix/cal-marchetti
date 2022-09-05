@@ -171,11 +171,18 @@ ${getRichDescription(this.calEvent)}
                               ${this.getWho()}
                               ${
                                 this.calEvent.type === "Consulta Seguimiento Presencial" ||
-                                this.calEvent.type === "Primera Consulta Presencial"
+                                this.calEvent.type === "Primera Consulta Presencial - Pago Anticipo" ||
+                                this.calEvent.type === "Primera Consulta Presencial - Pago Completo"
                                   ? this.presencial()
-                                  : this.calEvent.type === "Plan Online - 1er Consulta"
+                                  : this.calEvent.type === "Plan Online - 1er Consulta" ||
+                                    this.calEvent.type === "Plan Online Basic - 1er Consulta" ||
+                                    this.calEvent.type === "Plan Online Basic FIT - 1er Consulta" ||
+                                    this.calEvent.type === "Plan Online Full - 1er Consulta" ||
+                                    this.calEvent.type === "Plan Online Full FIT - 1er Consulta"
                                   ? this.online()
-                                  : this.onlineSeguimiento()
+                                  : this.calEvent.type === "Plan Online - Consulta Seguimiento"
+                                  ? this.onlineSeguimiento()
+                                  : this.getLocation()
                               }
                             </div>
                             <div style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:500;line-height:1;text-align:left;color:#3E3E3E;">
