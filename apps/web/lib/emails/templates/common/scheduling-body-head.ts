@@ -18,8 +18,8 @@ export const getHeadImage = (headerType: BodyHeadType): string => {
         : "https://app.cal.com/emails/calendarCircle@2x.png";
     case "cal-logo":
       return IS_PRODUCTION
-        ? "https://turnos-marchetti.vercel.app/LogoMR.png"
-        : "https://turnos-marchetti.vercel.app/LogoMR.png";
+        ? "https://turnos.marchettirules.com/LogoMR.png"
+        : "https://turnos.marchettirules.com/LogoMR.png";
   }
 };
 

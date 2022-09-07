@@ -9,8 +9,8 @@ export const attendeeToPersonConversionType = (attendees: Attendee[], t: TFuncti
       name: attendee.name,
       email: attendee.email,
       timeZone: attendee.timeZone,
-      locale: attendee.locale || "en",
-      language: { translate: t, locale: attendee.locale || "en" },
+      locale: attendee.locale || "es",
+      language: { translate: t, locale: attendee.locale || "es" },
     };
   });
 };

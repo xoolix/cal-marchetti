@@ -2,6 +2,7 @@ import {
   BanIcon,
   CheckIcon,
   ClockIcon,
+  InboxInIcon,
   LocationMarkerIcon,
   PaperAirplaneIcon,
   PencilAltIcon,
@@ -15,14 +16,18 @@ import { useState } from "react";
 import { useMutation } from "react-query";
 import { Frequency as RRuleFrequency } from "rrule";
 
+import { isPrismaObjOrUndefined } from "@calcom/lib";
 import classNames from "@calcom/lib/classNames";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import showToast from "@calcom/lib/notification";
+import { CalendarEvent, Person } from "@calcom/types/Calendar";
+import { Alert } from "@calcom/ui/Alert";
 import Button from "@calcom/ui/Button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader } from "@calcom/ui/Dialog";
 import { Tooltip } from "@calcom/ui/Tooltip";
 import { TextArea } from "@calcom/ui/form/fields";
 
+import { attendeeToPersonConversionType } from "@lib/attendeeToPersonConversionType";
 import { HttpError } from "@lib/core/http/error";
 import useMeQuery from "@lib/hooks/useMeQuery";
 import { LocationType } from "@lib/location";
@@ -87,6 +92,24 @@ function BookingListItem(booking: BookingItemProps) {
   const isUpcoming = new Date(booking.endTime) >= new Date();
   const isCancelled = booking.status === BookingStatus.CANCELLED;
 
+  const evt: CalendarEvent = {
+    type: booking?.title,
+    title: booking?.title,
+    description: booking?.description || "",
+    startTime: booking?.startTime,
+    endTime: booking?.endTime,
+    customInputs: isPrismaObjOrUndefined(booking?.customInputs),
+    organizer: {
+      email: "contacto@marchettirules.com",
+      name: "MarchettiRules",
+      timeZone: "America/Buenos_Aires",
+      language: { translate: t, locale: user?.locale ?? "es" },
+    },
+    attendees: attendeeToPersonConversionType(booking?.attendees, t),
+    uid: booking?.uid,
+    destinationCalendar: null,
+  };
+
   const pendingActions: ActionType[] = [
     {
       id: "reject",
@@ -127,6 +150,26 @@ function BookingListItem(booking: BookingItemProps) {
       label: t("edit_booking"),
       icon: PencilAltIcon,
       actions: [
+        {
+          id: "reenviar-email",
+          label: "Reenviar email",
+          icon: InboxInIcon,
+          onClick: async () => {
+            const res = await fetch("/api/reSendEmail", {
+              method: "POST",
+              body: JSON.stringify(evt),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            if (!res.ok) {
+              console.log("Something went wrong");
+            } else {
+              showToast("Email reenviado", "success");
+            }
+            return res.json();
+          },
+        },
         {
           id: "reschedule",
           icon: ClockIcon,
