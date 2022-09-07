@@ -21,6 +21,7 @@ import classNames from "@calcom/lib/classNames";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import showToast from "@calcom/lib/notification";
 import { CalendarEvent, Person } from "@calcom/types/Calendar";
+import { Alert } from "@calcom/ui/Alert";
 import Button from "@calcom/ui/Button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader } from "@calcom/ui/Dialog";
 import { Tooltip } from "@calcom/ui/Tooltip";
@@ -163,6 +164,8 @@ function BookingListItem(booking: BookingItemProps) {
             });
             if (!res.ok) {
               console.log("Something went wrong");
+            } else {
+              showToast("Email reenviado", "success");
             }
             return res.json();
           },
