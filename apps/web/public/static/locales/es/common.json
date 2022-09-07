@@ -438,7 +438,7 @@
   "friday": "Viernes",
   "saturday": "Sábado",
   "sunday": "Domingo",
-  "all_booked_today": "Todo Reservado Hoy.",
+  "all_booked_today": "No hay turnos disponibles.",
   "slots_load_fail": "No se pudo cargar el intervalo de tiempo disponible.",
   "additional_guests": "+ Invitados Adicionales",
   "your_name": "Nombre",
