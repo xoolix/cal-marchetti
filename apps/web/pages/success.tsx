@@ -581,18 +581,6 @@ export default function Success(props: SuccessProps) {
                         </div>
                       </div>
                     )}
-                    <div className="border-bookinglightest text-bookingdark pt-5 text-center">
-                      <div>
-                        <Button
-                          color="secondary"
-                          className="m-auto text-center"
-                          onClick={async () => {
-                            const res = await sendScheduledEmails({ ...evt }, eventType.recurringEvent);
-                          }}>
-                          Reenviar email
-                        </Button>
-                      </div>
-                    </div>
                     {!(userIsOwner || props.hideBranding) && (
                       <div className="border-bookinglightest text-booking-lighter pt-4 text-center text-xs dark:border-gray-900 dark:text-white">
                         <a href="https://cal.com/signup">{t("create_booking_link_with_calcom")}</a>

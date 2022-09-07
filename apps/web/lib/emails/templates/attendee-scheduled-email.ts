@@ -146,7 +146,11 @@ ${getRichDescription(this.calEvent)}
             this.recurringEvent?.count
               ? "your_event_has_been_scheduled_recurring"
               : this.calEvent.type === "Plan Online - 1er Consulta" ||
-                this.calEvent.type === "Plan Online - Consulta Seguimiento"
+                this.calEvent.type === "Plan Online - Consulta Seguimiento" ||
+                this.calEvent.type === "Plan Online Basic - 1er Consulta" ||
+                this.calEvent.type === "Plan Online Basic FIT - 1er Consulta" ||
+                this.calEvent.type === "Plan Online Full - 1er Consulta" ||
+                this.calEvent.type === "Plan Online Full FIT - 1er Consulta"
               ? "your_event_has_been_scheduled_online"
               : "your_event_has_been_scheduled"
           ),
@@ -174,7 +178,11 @@ ${getRichDescription(this.calEvent)}
                                 this.calEvent.type === "Primera Consulta Presencial" ||
                                 this.calEvent.type === "Primera Consulta Presencial - Pago Completo"
                                   ? this.presencial()
-                                  : this.calEvent.type === "Plan Online - 1er Consulta"
+                                  : this.calEvent.type === "Plan Online - 1er Consulta" ||
+                                    this.calEvent.type === "Plan Online Basic - 1er Consulta" ||
+                                    this.calEvent.type === "Plan Online Basic FIT - 1er Consulta" ||
+                                    this.calEvent.type === "Plan Online Full - 1er Consulta" ||
+                                    this.calEvent.type === "Plan Online Full FIT - 1er Consulta"
                                   ? this.online()
                                   : this.calEvent.type === "Plan Online - Consulta Seguimiento"
                                   ? this.onlineSeguimiento()
@@ -241,7 +249,13 @@ ${getRichDescription(this.calEvent)}
       <p style="font-weight: 700; line-height: 24px; color: #494949;">Muchas gracias, ¡Te espero! 🤗</p>
       <br/>
       `;
-    } else if (this.calEvent.type === "Plan Online - 1er Consulta") {
+    } else if (
+      this.calEvent.type === "Plan Online - 1er Consulta" ||
+      this.calEvent.type === "Plan Online Basic - 1er Consulta" ||
+      this.calEvent.type === "Plan Online Basic FIT - 1er Consulta" ||
+      this.calEvent.type === "Plan Online Full - 1er Consulta" ||
+      this.calEvent.type === "Plan Online Full FIT - 1er Consulta"
+    ) {
       return `
       <br/>
       <p style="font-weight: 700; line-height: 24px; color: #494949;">Te detallamos la info para que puedas estar preparad@ el día de la consulta con Matías:</p>
