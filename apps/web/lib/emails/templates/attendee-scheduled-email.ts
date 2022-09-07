@@ -175,7 +175,7 @@ ${getRichDescription(this.calEvent)}
                               ${this.getWho()}
                               ${
                                 this.calEvent.type === "Consulta Seguimiento Presencial" ||
-                                this.calEvent.type === "Primera Consulta Presencial" ||
+                                this.calEvent.type === "Primera Consulta Presencial - Pago Anticipo" ||
                                 this.calEvent.type === "Primera Consulta Presencial - Pago Completo"
                                   ? this.presencial()
                                   : this.calEvent.type === "Plan Online - 1er Consulta" ||
@@ -238,7 +238,7 @@ ${getRichDescription(this.calEvent)}
 
   protected getEmailText(): string {
     if (
-      this.calEvent.type === "Primera Consulta Presencial" ||
+      this.calEvent.type === "Primera Consulta Presencial - Pago Anticipo" ||
       this.calEvent.type === "Primera Consulta Presencial - Pago Completo"
     ) {
       return `
