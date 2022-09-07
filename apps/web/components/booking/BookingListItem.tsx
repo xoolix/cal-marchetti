@@ -97,7 +97,7 @@ function BookingListItem(booking: BookingItemProps) {
     title: booking?.title,
     description: booking?.description || "",
     startTime: booking?.startTime,
-    endTime: booking?.startTime || "",
+    endTime: booking?.endTime,
     customInputs: isPrismaObjOrUndefined(booking?.customInputs),
     organizer: {
       email: "contacto@marchettirules.com",
