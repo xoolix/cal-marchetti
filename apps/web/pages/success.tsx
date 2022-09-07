@@ -361,7 +361,12 @@ export default function Success(props: SuccessProps) {
                             ? t("event_cancelled")
                             : props.recurringBookings
                             ? t("reunion_confirmada")
-                            : router.query.type === "38" || router.query.type === "37"
+                            : router.query.type === "38" ||
+                              router.query.type === "37" ||
+                              router.query.type === "55" ||
+                              router.query.type === "56" ||
+                              router.query.type === "57" ||
+                              router.query.type === "58"
                             ? t("reunion_confirmada_online")
                             : t("reunion_confirmada")}
                         </h3>
