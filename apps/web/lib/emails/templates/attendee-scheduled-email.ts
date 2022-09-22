@@ -289,7 +289,10 @@ ${getRichDescription(this.calEvent)}
       <p style="font-weight: 700; line-height: 24px; color: #494949;">Muchas gracias, ¡Te espero! 🤗</p>
       <br/>
       `;
-    } else if (this.calEvent.type === "Plan Online - Consulta Seguimiento") {
+    } else if (
+      this.calEvent.type === "Plan Online - Nueva Consulta Seguimiento" ||
+      this.calEvent.type === "Plan Online - Consulta Seguimiento"
+    ) {
       return `
       <br/>
       <p style="font-weight: 700; line-height: 24px; color: #494949;">Enviar las medidas corporales y peso previo a la consulta y una vez hecha la hora, llamarlo a través de whatsapp.</p>
