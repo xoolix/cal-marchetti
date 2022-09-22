@@ -31,7 +31,7 @@ export const ExcelExport = ({ booking }) => {
     for (let i = 0; i < booking.length; i++) {
       if (booking[i].status == "ACCEPTED") {
         excelData[0].data.push([
-          dayjs(booking[i].createdAt).format("DD-MM HH:mm"),
+          dayjs(booking[i].createdAt).format("DD-MM-YY HH:mm"),
           booking[i].attendees[0].name,
           booking[i].customInputs.Apellido,
           dayjs(booking[i].startTime).format("DD-MM"),
