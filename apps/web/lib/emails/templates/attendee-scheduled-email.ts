@@ -184,7 +184,8 @@ ${getRichDescription(this.calEvent)}
                                     this.calEvent.type === "Plan Online Full - 1er Consulta" ||
                                     this.calEvent.type === "Plan Online Full FIT - 1er Consulta"
                                   ? this.online()
-                                  : this.calEvent.type === "Plan Online - Consulta Seguimiento"
+                                  : this.calEvent.type === "Plan Online - Nueva Consulta Seguimiento" ||
+                                    this.calEvent.type === "Plan Online - Consulta Seguimiento"
                                   ? this.onlineSeguimiento()
                                   : this.getLocation()
                               }
