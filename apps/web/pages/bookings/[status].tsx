@@ -88,6 +88,7 @@ export default function Bookings() {
     recurringEventId: string | null;
     paid: boolean;
     rescheduled: boolean | null;
+    createdAt: Date;
   }[] = [];
 
   return (

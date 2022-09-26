@@ -396,6 +396,7 @@ const loggedInViewerRouter = createProtectedRouter()
         },
         select: {
           ...bookingMinimalSelect,
+          createdAt: true,
           uid: true,
           confirmed: true,
           rejected: true,

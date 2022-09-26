@@ -366,7 +366,8 @@ export default function Success(props: SuccessProps) {
                               router.query.type === "55" ||
                               router.query.type === "56" ||
                               router.query.type === "57" ||
-                              router.query.type === "58"
+                              router.query.type === "58" ||
+                              router.query.type === "60"
                             ? t("reunion_confirmada_online")
                             : t("reunion_confirmada")}
                         </h3>

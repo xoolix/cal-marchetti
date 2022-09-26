@@ -7,11 +7,13 @@ import ReactExport from "react-export-excel-xlsx-fix";
 import { Button } from "@calcom/ui";
 
 export const ExcelExport = ({ booking }) => {
+  console.log("🚀 ~ file: ExcelExport.tsx ~ line 10 ~ ExcelExport ~ booking", booking);
   const ExcelFile = ReactExport.ExcelFile;
   const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
   const excelData = [
     {
       columns: [
+        { value: "Fecha de creacion del turno", widthCh: 140 },
         { value: "Nombre", widthCh: 120 },
         { value: "Apellido", widthCh: 120 },
         { value: "Fecha", widthPx: 100 },
@@ -25,12 +27,11 @@ export const ExcelExport = ({ booking }) => {
     },
   ];
 
-  console.log(booking);
-
   const updateData = () => {
     for (let i = 0; i < booking.length; i++) {
       if (booking[i].status == "ACCEPTED") {
         excelData[0].data.push([
+          dayjs(booking[i].createdAt).format("DD-MM-YY HH:mm"),
           booking[i].attendees[0].name,
           booking[i].customInputs.Apellido,
           dayjs(booking[i].startTime).format("DD-MM"),

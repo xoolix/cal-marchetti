@@ -110,6 +110,7 @@ function BookingListItem(booking: BookingItemProps) {
     destinationCalendar: null,
   };
 
+  const id = booking?.id;
   const pendingActions: ActionType[] = [
     {
       id: "reject",
@@ -166,6 +167,26 @@ function BookingListItem(booking: BookingItemProps) {
               console.log("Something went wrong");
             } else {
               showToast("Email reenviado", "success");
+            }
+            return res.json();
+          },
+        },
+        {
+          id: "quitar-etiquetas",
+          label: "Quitar etiquetas",
+          icon: XIcon,
+          onClick: async () => {
+            const res = await fetch("/api/quitarEtiquetas", {
+              body: JSON.stringify(id),
+              headers: {
+                "Content-Type": "application/json",
+              },
+              method: "PATCH",
+            });
+            if (!res.ok) {
+              console.log("Something went wrong");
+            } else {
+              showToast("Las etiquetas fueron quitadas", "success");
             }
             return res.json();
           },
