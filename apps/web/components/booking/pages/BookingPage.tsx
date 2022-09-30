@@ -686,23 +686,20 @@ const BookingPage = ({
                         {input.type === EventTypeCustomInputType.BOOL && (
                           <div className="flex h-5 items-center">
                             <input
-                              type="radio"
+                              type="checkbox"
                               {...bookingForm.register(`customInputs.${input.id}`, {
                                 required: input.required,
                               })}
+                              required={input.required}
                               id={"custom_" + input.id}
                               className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black disabled:bg-gray-200 ltr:mr-2 rtl:ml-2 disabled:dark:text-gray-500"
                               placeholder=""
-                              value={"Si"}
                               disabled={disabledExceptForOwner}
-                              required={checked}
-                              name="buttons"
-                              onChange={(e) => setChecked(!checked)}
                             />
                             <label
                               htmlFor={"custom_" + input.id}
                               className="mb-1 block text-sm font-medium text-gray-700 dark:text-white">
-                              {input.label}
+                              {input.label.replaceAll("_", " ")}
                             </label>
                           </div>
                         )}

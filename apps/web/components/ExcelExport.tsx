@@ -14,14 +14,15 @@ export const ExcelExport = ({ booking }) => {
     {
       columns: [
         { value: "Fecha de creacion del turno", widthCh: 140 },
-        { value: "Nombre", widthCh: 120 },
-        { value: "Apellido", widthCh: 120 },
+        { value: "Nombre", widthCh: 130 },
+        { value: "Apellido", widthCh: 130 },
         { value: "Fecha", widthPx: 100 },
         { value: "Hora", widthPx: 100 },
-        { value: "Tipo de consulta", widthPx: 200 },
+        { value: "Tipo de consulta", widthPx: 220 },
         { value: "Email", widthPx: 220 },
-        { value: "Teléfono", widthPx: 100 },
+        { value: "Teléfono", widthPx: 120 },
         { value: "Fecha de nacimiento", widthPx: 120 },
+        { value: "Metodo de pago", widthPx: 150 },
       ],
       data: [],
     },
@@ -40,6 +41,13 @@ export const ExcelExport = ({ booking }) => {
           booking[i].attendees[0].email,
           booking[i].customInputs.Teléfono,
           booking[i].customInputs.Fecha_de_nacimiento,
+          booking[i].customInputs.MercadoPago_en_consultorio == true
+            ? "MercadoPago en consultorio"
+            : booking[i].customInputs.Efectivo == true
+            ? "Efectivo"
+            : booking[i].customInputs.Transferencia_bancaria == true
+            ? "Transferencia bancaria"
+            : "",
         ]);
       }
     }
