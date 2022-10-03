@@ -440,13 +440,13 @@ export default function Success(props: SuccessProps) {
                                   {customInput !== "" && (
                                     <>
                                       <div className="mt-2 pr-3 font-medium">
-                                        {customInput === null ? "" : key.replaceAll("_", " ")}
+                                        {customInput === false ? "" : key.replaceAll("_", " ")}
                                       </div>
                                       <div className="col-span-2 mt-2 mb-2">
                                         {typeof customInput === "boolean" ? (
-                                          <p>{customInput ? "Si" : "-"}</p>
+                                          <p>{customInput ? "Si" : ""}</p>
                                         ) : (
-                                          <p>{customInput}</p>
+                                          <p>{customInput.replaceAll("_", " ")}</p>
                                         )}
                                       </div>
                                     </>
