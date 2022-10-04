@@ -446,7 +446,7 @@ export default function Success(props: SuccessProps) {
                                         {typeof customInput === "boolean" ? (
                                           <p>{customInput ? "Si" : ""}</p>
                                         ) : (
-                                          <p>{customInput.replaceAll("_", " ")}</p>
+                                          <p>{customInput}</p>
                                         )}
                                       </div>
                                     </>
