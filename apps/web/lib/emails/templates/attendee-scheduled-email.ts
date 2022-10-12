@@ -429,7 +429,12 @@ ${getRichDescription(this.calEvent)}
     <p style="height: 6px"></p>
     <div style="line-height: 6px;">
       <p style="color: #494949;">Lugar</p>
-      <p style="color: #494949; font-weight: 400; line-height: 24px;"> Arenales 1611 Piso 3, CABA</p>
+      <p style="color: #494949; font-weight: 400; line-height: 24px;">
+      ${this.calEvent.attendees[0].language.translate(
+        this.getInviteeStart().format("dddd").toLowerCase() == "saturday"
+          ? "Domingo Faustino Sarmiento 2519, Olivos"
+          : "Arenales 1611 Piso 3, CABA"
+      )}</p>
     </div>
   `;
   }
