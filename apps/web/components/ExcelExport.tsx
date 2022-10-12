@@ -22,7 +22,7 @@ export const ExcelExport = ({ booking }) => {
         { value: "Email", widthPx: 220 },
         { value: "Teléfono", widthPx: 120 },
         { value: "Fecha de nacimiento", widthPx: 120 },
-        { value: "Nacionalidad y país de residencia", widthPx: 120 },
+        { value: "Nacionalidad y país de residencia", widthPx: 170 },
         { value: "Metodo de pago", widthPx: 150 },
       ],
       data: [],
