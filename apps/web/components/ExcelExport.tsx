@@ -22,6 +22,7 @@ export const ExcelExport = ({ booking }) => {
         { value: "Email", widthPx: 220 },
         { value: "Teléfono", widthPx: 120 },
         { value: "Fecha de nacimiento", widthPx: 120 },
+        { value: "Nacionalidad", widthPx: 120 },
         { value: "Metodo de pago", widthPx: 150 },
       ],
       data: [],
@@ -41,12 +42,15 @@ export const ExcelExport = ({ booking }) => {
           booking[i].attendees[0].email,
           booking[i].customInputs.Teléfono,
           booking[i].customInputs.Fecha_de_nacimiento,
+          booking[i].customInputs.Nacionalidad_o_País_de_residencia,
           booking[i].customInputs.MercadoPago_en_consultorio == true
             ? "MercadoPago en consultorio"
             : booking[i].customInputs.Efectivo == true
             ? "Efectivo"
             : booking[i].customInputs.Transferencia_bancaria == true
             ? "Transferencia bancaria"
+            : booking[i].customInputs.MercadoPago == true
+            ? "MercadoPago"
             : "",
         ]);
       }
