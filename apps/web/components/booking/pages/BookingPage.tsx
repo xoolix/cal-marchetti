@@ -426,7 +426,10 @@ const BookingPage = ({
     }
   };
 
-  const [checked, setChecked] = useState(true);
+  const [required, setRequired] = useState(true);
+  const handleOnChange = () => {
+    required == true ? setRequired(false) : setRequired(false);
+  };
   const disableInput = !!rescheduleUid;
   const disabledExceptForOwner = disableInput && !loggedInIsOwner;
   const inputClassName =
@@ -690,10 +693,10 @@ const BookingPage = ({
                               {...bookingForm.register(`customInputs.${input.id}`, {
                                 required: input.required,
                               })}
-                              required={input.required}
+                              required={required}
                               id={"custom_" + input.id}
                               className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black disabled:bg-gray-200 ltr:mr-2 rtl:ml-2 disabled:dark:text-gray-500"
-                              placeholder=""
+                              onChange={handleOnChange}
                               disabled={disabledExceptForOwner}
                             />
                             <label
