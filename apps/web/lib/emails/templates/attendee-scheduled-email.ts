@@ -433,7 +433,7 @@ ${getRichDescription(this.calEvent)}
       ${this.calEvent.attendees[0].language.translate(
         this.getInviteeStart().format("dddd").toLowerCase() == "saturday"
           ? "Domingo Faustino Sarmiento 2519, Olivos"
-          : "Arenales 1611 Piso 3, CABA"
+          : "Rodriguez Peña 2087, CABA. Piso 1, departamento C"
       )}</p>
     </div>
   `;
