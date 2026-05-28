@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/solid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EventTypeCustomInputType } from "@prisma/client";
+import type { EventTypeCustomInput } from "@prisma/client";
 import { useContracts } from "contexts/contractsContext";
 import dayjs from "dayjs";
 import { useSession } from "next-auth/react";
@@ -232,16 +233,18 @@ const BookingPage = ({
   const guestListEmails = !isDynamicGroupBooking
     ? booking?.attendees.slice(1).map((attendee) => attendee.email)
     : [];
+  const eventTypeCustomInputs = eventType.customInputs as EventTypeCustomInput[];
 
   const defaultValues = () => {
     if (!rescheduleUid) {
       return {
         name: loggedInIsOwner ? "" : session?.user?.name || (router.query.name as string) || "",
-        customInputs: eventType.customInputs.reduce(
-          (customInputs, input) => ({
-            ...customInputs,
-            [input.id]: router.query[slugify(input.label)],
-          }),
+        customInputs: eventTypeCustomInputs.reduce<NonNullable<BookingFormValues["customInputs"]>>(
+          (customInputs, input) => {
+            const value = router.query[slugify(input.label)];
+            customInputs[input.id] = Array.isArray(value) ? value[0] || "" : value || "";
+            return customInputs;
+          },
           {}
         ),
         email: loggedInIsOwner ? "" : session?.user?.email || (router.query.email as string) || "",
@@ -257,16 +260,14 @@ const BookingPage = ({
       return {};
     }
 
-    const customInputType = booking.customInputs;
+    const customInputType = (booking.customInputs || {}) as Record<string, string | boolean | undefined>;
     return {
       name: primaryAttendee.name || "",
-      customInputs: eventType.customInputs.reduce(
-        (customInputs, input) => ({
-          ...customInputs,
-          [input.id]: booking.customInputs
-            ? booking.customInputs[input.label as keyof typeof customInputType]
-            : "",
-        }),
+      customInputs: eventTypeCustomInputs.reduce<NonNullable<BookingFormValues["customInputs"]>>(
+        (customInputs, input) => {
+          customInputs[input.id] = customInputType[input.label] ?? "";
+          return customInputs;
+        },
         {}
       ),
       email: primaryAttendee.email || "",
@@ -390,7 +391,7 @@ const BookingPage = ({
         ),
         metadata,
         customInputs: Object.keys(booking.customInputs || {}).map((inputId) => ({
-          label: eventType.customInputs.find((input) => input.id === parseInt(inputId))?.label || "",
+          label: eventTypeCustomInputs.find((input) => input.id === parseInt(inputId))?.label || "",
           value: booking.customInputs && inputId in booking.customInputs ? booking.customInputs[inputId] : "",
         })),
         hasHashedBookingLink,
@@ -416,7 +417,7 @@ const BookingPage = ({
         ),
         metadata,
         customInputs: Object.keys(booking.customInputs || {}).map((inputId) => ({
-          label: eventType.customInputs.find((input) => input.id === parseInt(inputId))?.label || "",
+          label: eventTypeCustomInputs.find((input) => input.id === parseInt(inputId))?.label || "",
           value: booking.customInputs && inputId in booking.customInputs ? booking.customInputs[inputId] : "",
         })),
         hasHashedBookingLink,
@@ -595,7 +596,7 @@ const BookingPage = ({
                       />
                     </div>
                   </div>
-                  {eventType.customInputs
+                  {eventTypeCustomInputs
                     .sort((a, b) => a.id - b.id)
                     .map((input) => (
                       <div className="mb-4" key={input.id}>
@@ -684,7 +685,7 @@ const BookingPage = ({
                     ) : (
                       ""
                     )}
-                    {eventType.customInputs.map((input) => (
+                    {eventTypeCustomInputs.map((input) => (
                       <div className="mb-4" key={input.id}>
                         {input.type === EventTypeCustomInputType.BOOL && (
                           <div className="flex h-5 items-center">

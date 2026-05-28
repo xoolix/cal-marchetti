@@ -43,14 +43,10 @@ const LicenseRequired: FC<LicenseRequiredProps> = ({ children, as = "", ...rest 
   );
 };
 
-export function withLicenseRequired<T>(Component: ComponentType<T>) {
+export function withLicenseRequired<T extends object>(Component: ComponentType<T>): FC<T> {
   // eslint-disable-next-line react/display-name
   return (hocProps: T) => {
-    return (
-      <LicenseRequired>
-        <Component {...(hocProps as T)} />;
-      </LicenseRequired>
-    );
+    return <LicenseRequired>{React.createElement(Component, hocProps)}</LicenseRequired>;
   };
 }
 

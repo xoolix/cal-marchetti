@@ -142,7 +142,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   const [user] = users;
   const eventTypeObject = Object.assign({}, hashedLink.eventType, {
     metadata: {} as JSONObject,
-    recurringEvent: (eventTypeSelect.recurringEvent || {}) as RecurringEvent,
+    recurringEvent: (hashedLink.eventType.recurringEvent || {}) as unknown as RecurringEvent,
     periodStartDate: hashedLink.eventType.periodStartDate?.toString() ?? null,
     periodEndDate: hashedLink.eventType.periodEndDate?.toString() ?? null,
     slug,

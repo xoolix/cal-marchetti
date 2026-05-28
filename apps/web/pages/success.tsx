@@ -262,7 +262,8 @@ export default function Success(props: SuccessProps) {
     }
     return t("detalles" + titleSuffix);
   }
-  const userIsOwner = !!(session?.user?.id && eventType.users.find((user) => (user.id = session.user.id)));
+  const eventTypeUsers = eventType.users as { id: number }[];
+  const userIsOwner = !!(session?.user?.id && eventTypeUsers.some((user) => user.id === session.user.id));
   const { isReady, Theme } = useTheme(userIsOwner ? "light" : props.profile.theme);
   const title = t(
     `booking_${needsConfirmation ? "submitted" : "confirmed"}${props.recurringBookings ? "_recurring" : ""}`
@@ -937,7 +938,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     });
     if (user) {
-      eventTypeRaw.users.push(user);
+      (eventTypeRaw.users as typeof user[]).push(user);
     }
   }
 
