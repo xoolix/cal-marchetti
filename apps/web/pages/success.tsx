@@ -250,7 +250,8 @@ export default function Success(props: SuccessProps) {
   function getTitle(): string {
     const titleSuffix = props.recurringBookings ? "_recurring" : "";
     if (isCancelled) {
-      return t("emailed_information_about_cancelled_event");
+      // Not every cancellation emails attendees (e.g. unpaid bookings released from /failure).
+      return t("book_again_after_cancellation");
     }
     if (needsConfirmation) {
       if (props.profile.name !== null) {
@@ -409,6 +410,12 @@ export default function Success(props: SuccessProps) {
                                   </div>
                                 ))}
                               </div>
+                            </>
+                          )}
+                          {isCancelled && bookingInfo?.cancellationReason && (
+                            <>
+                              <div className="font-medium">{t("cancellation_reason")}</div>
+                              <div className="col-span-2 mb-6">{bookingInfo.cancellationReason}</div>
                             </>
                           )}
                           {location && (
@@ -974,6 +981,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       uid: true,
       description: true,
       customInputs: true,
+      cancellationReason: true,
       user: {
         select: {
           name: true,

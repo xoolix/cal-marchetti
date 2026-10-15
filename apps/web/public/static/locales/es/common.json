@@ -17,6 +17,8 @@
   "organizer": "Organizador",
   "need_to_reschedule_or_cancel": "¿Necesitas reprogramar o cancelar tu turno?",
   "cancellation_reason": "Motivo de la cancelación",
+  "event_cancelled": "Este turno fue cancelado",
+  "book_again_after_cancellation": "Si lo necesitás, podés reservar un nuevo turno.",
   "cancellation_reason_placeholder": "¿Por qué razón estás cancelando? (opcional)",
   "rejection_reason": "Motivo del rechazo",
   "rejection_reason_title": "¿Rechazar la solicitud de reserva?",

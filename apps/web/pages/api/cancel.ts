@@ -209,19 +209,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({ message: "Booking successfully deleted." });
   }
 
-  const attendeeDeletes = prisma.attendee.deleteMany({
-    where: {
-      bookingId: bookingToDelete.id,
-    },
-  });
-
   const bookingReferenceDeletes = prisma.bookingReference.deleteMany({
     where: {
       bookingId: bookingToDelete.id,
     },
   });
 
-  await Promise.all([apiDeletes, attendeeDeletes, bookingReferenceDeletes]);
+  await Promise.all([apiDeletes, bookingReferenceDeletes]);
 
   await sendCancelledEmails(evt);
 

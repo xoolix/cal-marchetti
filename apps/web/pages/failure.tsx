@@ -45,6 +45,7 @@ function PlaceholderFailure(props: inferSSRProps<typeof getServerSideProps>) {
               </Link>
               <Button
                 className="ml-3"
+                color="secondary"
                 data-testid="cancel"
                 onClick={async () => {
                   setLoading(true);
@@ -57,12 +58,12 @@ function PlaceholderFailure(props: inferSSRProps<typeof getServerSideProps>) {
                     jitsu.track(telemetryEventTypes.bookingCancelled, collectPageParameters())
                   );
 
-                  const res = await fetch("/api/cancel", {
+                  const res = await fetch("/api/book/release-unpaid", {
                     body: JSON.stringify(payload),
                     headers: {
                       "Content-Type": "application/json",
                     },
-                    method: "DELETE",
+                    method: "POST",
                   });
 
                   if (res.status >= 200 && res.status < 300) {
@@ -70,7 +71,7 @@ function PlaceholderFailure(props: inferSSRProps<typeof getServerSideProps>) {
                   }
                 }}
                 loading={loading}>
-                Reintentar
+                Elegir otro horario
               </Button>
             </span>
           </div>
