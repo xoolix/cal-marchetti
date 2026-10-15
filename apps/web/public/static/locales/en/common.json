@@ -872,6 +872,7 @@
   "reschedule_placeholder": "Let others know why you need to reschedule",
   "event_cancelled":"This event is cancelled",
   "emailed_information_about_cancelled_event": "We emailed you and the other attendees to let them know.",
+  "book_again_after_cancellation": "If you need to, you can book a new appointment.",
   "this_input_will_shown_booking_this_event": "This input will be shown when booking this event",
   "meeting_url_in_conformation_email": "Meeting url is in the confirmation email",
   "url_start_with_https": "URL needs to start with http:// or https://",
